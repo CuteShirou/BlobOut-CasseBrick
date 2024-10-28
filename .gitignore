@@ -7,3 +7,4 @@
 *.ipch
 *.opendb
 CasseBrickTempo/.vs/CasseBrickTempo/v17/.suo
+*.json
