@@ -6,15 +6,11 @@ Brick::Brick(sf::Vector2<float> posBrick, sf::Vector2<float> size) : posBrick(po
 	brick.setSize(size);
 	brick.setPosition(posBrick);
 	brick.setFillColor(sf::Color::Red);
+    Draw(SpriteDraw);
 }
 
 Brick::~Brick()
 {
-}
-
-sf::RectangleShape Brick::GetBrick()
-{
-	return brick;
 }
 
 void Brick::Destroy()
@@ -28,7 +24,7 @@ bool Brick::IsDestroyed() const
 	return m_IsDestroyed;
 }
 
-bool Brick::CheckCollision(const sf::CircleShape& ball) {
+bool Brick::OnCollision(const sf::CircleShape& ball) {
     if (m_IsDestroyed) return false;
 
     // Coordonnées de la balle

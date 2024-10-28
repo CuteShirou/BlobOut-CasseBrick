@@ -3,8 +3,9 @@
 
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include "Entity.h"
 
-class Brick
+class Brick : public Entity
 {
 private:
 	sf::RectangleShape brick;
@@ -13,10 +14,9 @@ private:
 public:
 	Brick(sf::Vector2<float> posBrick, sf::Vector2<float> size);
 	~Brick();
-	sf::RectangleShape GetBrick();
-	void Destroy();
+	void Destroy() override;
 	bool IsDestroyed() const;
-	bool CheckCollision(const sf::CircleShape& Ball);
+	bool OnCollision(const sf::CircleShape& Ball);
 	void Draw(sf::RenderWindow& window);
 };
 

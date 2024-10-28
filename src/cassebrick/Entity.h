@@ -8,7 +8,7 @@ public:
 	~Entity();
 	virtual void destroy() = 0;
 	virtual void move() = 0;
-	virtual bool onCollision(Entity& entity1, Entity& entity2) = 0;
+	virtual bool onCollision(Entity& entity) = 0;
 	virtual
 
 
