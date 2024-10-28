@@ -1,0 +1,9 @@
+
+*.db
+*.db-shm
+*.db-wal
+/.vs
+*.vsidx
+*.ipch
+*.opendb
+CasseBrickTempo/.vs/CasseBrickTempo/v17/.suo
