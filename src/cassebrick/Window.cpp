@@ -12,24 +12,24 @@ Window::~Window()
 
 }
 
-void Window::createWindow(int width, int height)
+void Window::CreateWindow(int width, int height)
 {
 
 	window.create(sf::VideoMode(width, height), "*test*");
 }
 
-void Window::clear()
+void Window::Clear()
 {
 	window.clear(sf::Color::Black);
 }
 
-void Window::display()
+void Window::Display()
 {
 	window.display();
 }
 
 
-void Window::pollEvents()
+void Window::PollEvents()
 {
 	sf::Event event;
 	while (window.pollEvent(event))
@@ -39,12 +39,17 @@ void Window::pollEvents()
 	}
 }
 
-bool Window::isRunning()
+bool Window::IsRunning()
 {
 	return window.isOpen();
 }
 
-void Window::close()
+void Window::Close()
 {
 	window.close();
+}
+
+void Window::Draw(sf::Sprite sprite)
+{
+	window.draw(sprite);
 }
