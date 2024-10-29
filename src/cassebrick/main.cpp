@@ -10,18 +10,19 @@ int main()
 {
 	sf::Vector2f paddlePos(350, 500);
 	Window window;
-	Paddle paddle(paddlePos);
+	Paddle* paddle = new Paddle(paddlePos);
 
 	window.CreateWindow(800, 600);
+
 	while (true) {
 		window.Clear();
 
-		window.PollEvents();
+		window.PollEvents(paddle);
 
-		paddle.SetPos(paddlePos);
-		paddle.SpriteDraw("../../../src/cassebrick/paddle.png");
-		paddle.SetScale(1, 1.2);
-		window.Draw(paddle.GetSprite());
+		
+		paddle->SpriteDraw("../../../src/cassebrick/paddle.png");
+		paddle->SetScale(1, 1.2);
+		window.Draw(paddle->GetSprite());
 
 		window.Display();
 	}

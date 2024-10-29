@@ -4,6 +4,7 @@
 
 Paddle::Paddle(sf::Vector2<float> pos_) : pos(pos_)
 {
+	sprite.setPosition(pos);
 }
 
 Paddle::~Paddle()
@@ -16,6 +17,14 @@ void Paddle::Destroy()
 
 void Paddle::Move()
 {
+	
+}
+
+void Paddle::MovePaddle(sf::Vector2f dir)
+{
+	std::cout << sprite.getPosition().x << std::endl;
+	sprite.move(dir);
+	std::cout << sprite.getPosition().x << std::endl;
 }
 
 bool Paddle::OnCollision(Entity& entity)
@@ -34,11 +43,10 @@ void Paddle::SetPos(sf::Vector2<float> pos_)
 	sprite.setPosition(pos_);
 }
 
-sf::Sprite Paddle::SpriteDraw(std::string imgDirectory)
+void Paddle::SpriteDraw(std::string imgDirectory)
 {
 	texture.loadFromFile(imgDirectory);
 	sprite.setTexture(texture);
-	return sprite;
 }
 
 void Paddle::SetScale(float x, float y)

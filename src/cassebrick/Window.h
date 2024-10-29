@@ -3,6 +3,7 @@
 
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
+#include "Paddle.h"
 
 class Window
 {
@@ -12,7 +13,7 @@ public:
 	void CreateWindow(int width, int height);
 	void Clear(); 
 	void Display();
-	void PollEvents();
+	void PollEvents(Paddle* sprite);
 	bool IsRunning();
 	void Close();
 	void Draw(sf::Sprite sprite);
