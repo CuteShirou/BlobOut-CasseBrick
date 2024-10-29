@@ -14,9 +14,12 @@ public:
 	sf::Vector2<float> GetPos() override;
 	void SetPos(sf::Vector2<float> pos) override;
 	sf::Sprite SpriteDraw(std::string imgDirectory) override;
+	void SetScale(float x, float y) override;
+	sf::Sprite GetSprite() override;
 
 protected:
 	sf::Vector2<float> pos;
 	sf::Sprite sprite;
+	sf::Texture texture;
 };
 
