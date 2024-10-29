@@ -1,12 +1,11 @@
 #include "pch.h"
 #include "Brick.h"
 
-Brick::Brick(sf::Vector2<float> posBrick, sf::Vector2<float> size) : posBrick(posBrick), m_IsDestroyed(false)
+Brick::Brick(sf::Vector2<float> posBrick, sf::Vector2<float> size, sf::Color color) : posBrick(posBrick), m_IsDestroyed(false)
 {
 	brick.setSize(size);
 	brick.setPosition(posBrick);
-	brick.setFillColor(sf::Color::Red);
-    Draw(SpriteDraw);
+	brick.setFillColor(color);
 }
 
 Brick::~Brick()
@@ -24,27 +23,35 @@ bool Brick::IsDestroyed() const
 	return m_IsDestroyed;
 }
 
-bool Brick::OnCollision(const sf::CircleShape& ball) {
-    if (m_IsDestroyed) return false;
-
-    // Coordonnées de la balle
-    sf::FloatRect ballBounds = ball.getGlobalBounds();
-
-    // Coordonnées de la brique
-    sf::FloatRect brickBounds = brick.getGlobalBounds();
-
-    // Vérifie si la balle intersecte la brique
-    if (brickBounds.intersects(ballBounds)) {
-        Destroy(); // Casse la brique en cas de collision
-        return true;
-    }
-    return false;
+bool Brick::OnCollision(Entity& entity)
+{
+	return false;
 }
 
 void Brick::Draw(sf::RenderWindow& window)
 {
-	if (m_IsDestroyed)
+	if (!m_IsDestroyed)
 	{
 		window.draw(brick);
 	}
+}
+
+void Brick::Move()
+{
+}
+
+sf::Vector2<float> Brick::GetPos()
+{
+	return sf::Vector2<float>();
+}
+
+void Brick::SetPos(sf::Vector2<float> pos)
+{
+}
+
+sf::Sprite Brick::SpriteDraw(std::string imgDirectory)
+{
+	texture.loadFromFile(imgDirectory);
+	sf::Sprite sprite(texture);
+	return sprite;
 }
