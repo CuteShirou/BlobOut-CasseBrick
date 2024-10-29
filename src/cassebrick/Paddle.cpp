@@ -31,12 +31,22 @@ sf::Vector2<float> Paddle::GetPos()
 void Paddle::SetPos(sf::Vector2<float> pos_)
 {
 	pos = pos_;
+	sprite.setPosition(pos_);
 }
 
 sf::Sprite Paddle::SpriteDraw(std::string imgDirectory)
 {
-	sf::Texture texture;
 	texture.loadFromFile(imgDirectory);
-	sf::Sprite sprite(texture);
+	sprite.setTexture(texture);
+	return sprite;
+}
+
+void Paddle::SetScale(float x, float y)
+{
+	sprite.setScale(x, y);	
+}
+
+sf::Sprite Paddle::GetSprite()
+{
 	return sprite;
 }
