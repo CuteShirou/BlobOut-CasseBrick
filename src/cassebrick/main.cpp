@@ -19,12 +19,12 @@ int main()
     sf::Vector2<float> BrickScale(0.5, 0.5); // Taille de chaque brique
     int rows = 5; // Nombre de lignes de briques
     int cols = 13; // Nombre de colonnes de briques
-    float startX = 10; // Position de départ en X
-    float startY = 80; // Position de départ en Y
+    float startX = 10; // Position de dÃ©part en X
+    float startY = 80; // Position de dÃ©part en Y
     float spacingX = 79; // Espace entre les briques en X
     float spacingY = 35; // Espace entre les briques en Y
 
-    // Création du motif de briques
+    // CrÃ©ation du motif de briques
     for (int row = 0; row < rows; ++row) {
         for (int col = 0; col < cols; ++col) {
             float x = startX + col * (BrickScale.x + spacingX);
