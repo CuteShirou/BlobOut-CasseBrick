@@ -9,12 +9,21 @@ class Window
 public:
 	Window();
 	~Window();
+<<<<<<< Updated upstream
 	virtual void createWindow(int width, int height);
 	void clear(); 
 	virtual void display();
 	virtual void pollEvents();
 	virtual bool isRunning();
 	virtual void close();
+=======
+	void CreateWindow(int width, int height);
+	void Clear();
+	void Display();
+	void PollEvents();
+	bool IsRunning();
+	void Close();
+>>>>>>> Stashed changes
 
 protected:
 	sf::RenderWindow window;
