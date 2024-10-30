@@ -9,12 +9,12 @@ class Window
 public:
 	Window();
 	~Window();
-	virtual void createWindow(int width, int height);
-	void clear(); 
-	virtual void display();
-	virtual void pollEvents();
-	virtual bool isRunning();
-	virtual void close();
+	virtual void CreateWindow(int width, int height);
+	void Clear(); 
+	virtual void Display();
+	virtual void PollEvents();
+	virtual bool IsRunning();
+	virtual void Close();
 	void CreateWindow(int width, int height);
 	void Clear();
 	void Display();
