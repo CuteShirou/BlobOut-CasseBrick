@@ -9,6 +9,9 @@
 
 int main()
 {
+    sf::Vector2f paddlePos(350, 500);
+    Paddle* paddle = new Paddle(paddlePos);
+
     Window window;
     window.CreateWindow(800, 600);
 
@@ -34,8 +37,12 @@ int main()
     }
 
     while (true) {
-        window.PollEvents();
         window.Clear();
+        window.PollEvents(paddle);
+
+        paddle->SpriteDraw("../../../src/cassebrick/paddle.png");
+        paddle->SetScale(1, 1.2);
+        window.Draw(paddle->GetSprite());
 
         // Dessiner chaque brique
         for (auto& brick : bricks) {
