@@ -1,11 +1,9 @@
 #include "pch.h"
 #include "Brick.h"
 
-Brick::Brick(sf::Vector2<float> posBrick, sf::Vector2<float> size, sf::Color color) : posBrick(posBrick), m_IsDestroyed(false)
+Brick::Brick(sf::Vector2<float> posBrick, sf::Vector2<float> size) : posBrick(posBrick), m_IsDestroyed(false)
 {
-	brick.setSize(size);
 	brick.setPosition(posBrick);
-	brick.setFillColor(color);
 }
 
 Brick::~Brick()
@@ -15,7 +13,6 @@ Brick::~Brick()
 void Brick::Destroy()
 {
 	m_IsDestroyed = true;
-	brick.setFillColor(sf::Color::Transparent);
 }
 
 bool Brick::IsDestroyed() const
@@ -51,9 +48,17 @@ void Brick::SetPos(sf::Vector2<float> pos)
 	brick.setPosition(pos);
 }
 
-sf::Sprite Brick::SpriteDraw(std::string imgDirectory)
+void Brick::SpriteDraw(std::string imgDirectory)
 {
 	texture.loadFromFile(imgDirectory);
-	sf::Sprite sprite(texture);
-	return sprite;
+	brick.setTexture(texture);
+}
+
+void Brick::SetScale(float x, float y)
+{
+}
+
+sf::Sprite Brick::GetSprite()
+{
+	return brick;
 }

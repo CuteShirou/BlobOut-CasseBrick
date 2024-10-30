@@ -7,14 +7,13 @@
 
 class Brick : public Entity
 {
-private:
-	sf::RectangleShape brick;
+protected :
+	sf::Sprite brick;
+	sf::Texture texture;
 	bool m_IsDestroyed;
 	sf::Vector2<float> posBrick;
-protected :
-	sf::Texture texture;
 public:
-	Brick(sf::Vector2<float> posBrick, sf::Vector2<float> size, sf::Color color);
+	Brick(sf::Vector2<float> posBrick, sf::Vector2<float> size);
 	~Brick();
 	void Destroy() override;
 	bool IsDestroyed() const;
@@ -23,7 +22,9 @@ public:
 	void Move() override;
 	sf::Vector2<float> GetPos() override;
 	void SetPos(sf::Vector2<float> pos) override;
-	sf::Sprite SpriteDraw(std::string imgDirectory) override;
+	void SpriteDraw(std::string imgDirectory) override;
+	void SetScale(float x, float y) override;
+	sf::Sprite GetSprite() override;
 };
 
 #endif // BRICK_H__
