@@ -1,50 +1,35 @@
 #include "pch.h"
-#include "main.h"
 #include "Window.h"
-<<<<<<< Updated upstream
-
-#include<iostream>
-
-
-int main()
-{
-	Window window;
-
-	window.createWindow(800, 600);
-	while (true) {
-		window.pollEvents();
-		std::cout << "test" << std::endl;
-	}
-
-
-
-=======
 #include "Ball.h"
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
 int main()
 {
+    // Initialisation de la fenêtre et de la balle
     Window window;
-    sf::RenderWindow w;
     Ball ball(sf::Vector2f(100.0f, 100.0f), sf::Vector2f(1.0f, 1.0f), 5.0f);
 
+    // Création de la fenêtre SFML
     window.CreateWindow(800, 600);
 
-
+    // Boucle principale
     while (window.IsRunning()) {
-
+        // Gestion des événements
         window.PollEvents();
 
+        // Déplacement de la balle
         ball.Move();
 
+        // Efface la fenêtre avant de dessiner
         window.Clear();
 
-        ball.SpriteDraw("../../../src/cassebrick/ball.");
+        // Dessin de la balle
+        ball.SpriteDraw("../../../src/cassebrick/ball.png");
 
+        // Affiche ce qui a été dessiné
         window.Display();
     }
->>>>>>> Stashed changes
 
 #ifdef _DEBUG
     _CrtDumpMemoryLeaks();

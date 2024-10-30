@@ -49,4 +49,7 @@ void Window::Close()
 	window.close();
 }
 
-
+sf::RenderWindow& Window::GetWindow()
+{
+	return window;
+}

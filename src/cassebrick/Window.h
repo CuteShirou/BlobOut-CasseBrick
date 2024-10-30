@@ -15,6 +15,7 @@ public:
 	void PollEvents();
 	bool IsRunning();
 	void Close();
+	sf::RenderWindow& GetWindow();
 
 protected:
 	sf::RenderWindow window;
