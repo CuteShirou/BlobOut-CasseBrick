@@ -56,6 +56,7 @@ void Brick::SpriteDraw(std::string imgDirectory)
 
 void Brick::SetScale(float x, float y)
 {
+	brick.setScale(x, y);
 }
 
 sf::Sprite Brick::GetSprite()

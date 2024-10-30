@@ -16,20 +16,20 @@ int main()
     std::vector<Brick> bricks;
 
     // Dimensions de la brique et configuration du motif
-    sf::Vector2<float> SetScale(1, 2); // Taille de chaque brique
+    sf::Vector2<float> BrickScale(0.5, 0.5); // Taille de chaque brique
     int rows = 5; // Nombre de lignes de briques
-    int cols = 8; // Nombre de colonnes de briques
+    int cols = 13; // Nombre de colonnes de briques
     float startX = 10; // Position de départ en X
     float startY = 10; // Position de départ en Y
-    float spacingX = 90; // Espace entre les briques en X
-    float spacingY = 90; // Espace entre les briques en Y
+    float spacingX = 79; // Espace entre les briques en X
+    float spacingY = 55; // Espace entre les briques en Y
 
     // Création du motif de briques
     for (int row = 0; row < rows; ++row) {
         for (int col = 0; col < cols; ++col) {
-            float x = startX + col * (SetScale.x + spacingX);
-            float y = startY + row * (SetScale.y + spacingY);
-            bricks.emplace_back(sf::Vector2<float>(x, y), SetScale);
+            float x = startX + col * (BrickScale.x + spacingX);
+            float y = startY + row * (BrickScale.y + spacingY);
+            bricks.emplace_back(sf::Vector2<float>(x, y), BrickScale);
         }
     }
 
@@ -41,6 +41,7 @@ int main()
         for (auto& brick : bricks) {
             if (!brick.IsDestroyed()) {
                 brick.SpriteDraw("../../../src/cassebrick/BRICK.png");
+				brick.SetScale(BrickScale.x, BrickScale.y);
                 brick.SetPos(brick.GetPos());
                 window.Draw(brick.GetSprite());
             }
