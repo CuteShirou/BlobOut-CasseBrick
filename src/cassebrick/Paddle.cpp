@@ -15,14 +15,15 @@ void Paddle::Destroy()
 {
 }
 
-void Paddle::Move()
+
+void Paddle::Move(Window&)
 {
-	
 }
 
 void Paddle::MovePaddle(sf::Vector2f dir)
 {
 	sprite.move(dir);
+
 }
 
 bool Paddle::OnCollision(Entity& entity)

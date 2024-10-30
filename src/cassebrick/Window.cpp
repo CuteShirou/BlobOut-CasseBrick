@@ -17,6 +17,7 @@ void Window::CreateWindow(int width, int height)
 {
 
 	window.create(sf::VideoMode(width, height), "*test*");
+	window.setVerticalSyncEnabled(true);
 }
 
 void Window::Clear()

@@ -1,5 +1,4 @@
 #include "pch.h"
-#include "main.h"
 #include "Window.h"
 #include "Paddle.h"
 #include "Brick.h"
