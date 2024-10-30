@@ -4,6 +4,7 @@
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 #include "Paddle.h"
+#include <chrono>
 
 class Window
 {
@@ -21,7 +22,8 @@ public:
 
 protected:
 	sf::RenderWindow window;
-
+	bool mouseControl = true;
+	std::chrono::steady_clock::time_point lastKeyPressTime = std::chrono::steady_clock::now();
 };
 
 

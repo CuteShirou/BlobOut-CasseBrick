@@ -22,9 +22,7 @@ void Paddle::Move()
 
 void Paddle::MovePaddle(sf::Vector2f dir)
 {
-	std::cout << sprite.getPosition().x << std::endl;
 	sprite.move(dir);
-	std::cout << sprite.getPosition().x << std::endl;
 }
 
 bool Paddle::OnCollision(Entity& entity)
@@ -34,7 +32,7 @@ bool Paddle::OnCollision(Entity& entity)
 
 sf::Vector2<float> Paddle::GetPos()
 {
-	return pos;
+	return sprite.getPosition();
 }
 
 void Paddle::SetPos(sf::Vector2<float> pos_)
