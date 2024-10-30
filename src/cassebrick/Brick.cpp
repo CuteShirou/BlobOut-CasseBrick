@@ -33,10 +33,6 @@ void Brick::Draw(sf::RenderWindow& window)
 	}
 }
 
-void Brick::Move()
-{
-}
-
 sf::Vector2<float> Brick::GetPos()
 {
 	return brick.getPosition();

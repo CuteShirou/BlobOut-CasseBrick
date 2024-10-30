@@ -1,6 +1,6 @@
 #include "pch.h"
-#include "Paddle.h"
 #include <SFML/Graphics.hpp>
+#include "Paddle.h"
 
 Paddle::Paddle(sf::Vector2<float> pos_) : pos(pos_)
 {
@@ -12,11 +12,6 @@ Paddle::~Paddle()
 }
 
 void Paddle::Destroy()
-{
-}
-
-
-void Paddle::Move(Window&)
 {
 }
 
@@ -56,4 +51,9 @@ void Paddle::SetScale(float x, float y)
 sf::Sprite Paddle::GetSprite()
 {
 	return sprite;
+}
+
+sf::FloatRect Paddle::GetRectangle()
+{
+	return sprite.getGlobalBounds();
 }

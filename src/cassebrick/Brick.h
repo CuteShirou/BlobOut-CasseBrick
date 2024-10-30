@@ -19,7 +19,6 @@ public:
 	bool IsDestroyed() const;
 	bool OnCollision(Entity& entity) override;
 	void Draw(sf::RenderWindow& window);
-	void Move() override;
 	sf::Vector2<float> GetPos() override;
 	void SetPos(sf::Vector2<float> pos) override;
 	void SpriteDraw(std::string imgDirectory) override;
