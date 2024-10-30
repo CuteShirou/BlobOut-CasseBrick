@@ -3,7 +3,6 @@
 
 #include <iostream>
 #include <vector>
-#include "Window.h"
 #include <SFML/Graphics.hpp>
 
 class Entity

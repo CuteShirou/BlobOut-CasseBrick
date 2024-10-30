@@ -3,8 +3,9 @@
 
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
-#include "Paddle.h"
 #include <chrono>
+#include "Paddle.h"
+#include "Window.h"
 
 class Window
 {

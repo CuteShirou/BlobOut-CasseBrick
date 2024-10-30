@@ -2,8 +2,8 @@
 #define PADDLE_H__
 
 #include <SFML/Graphics.hpp>
-#include "Entity.h"
 #include <iostream>
+#include "Entity.h"
 
 class Paddle : public Entity
 {

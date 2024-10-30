@@ -1,6 +1,6 @@
 #include "pch.h"
-#include "Paddle.h"
 #include <SFML/Graphics.hpp>
+#include "Paddle.h"
 
 Paddle::Paddle(sf::Vector2<float> pos_) : pos(pos_)
 {

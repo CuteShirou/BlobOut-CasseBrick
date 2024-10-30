@@ -1,6 +1,7 @@
 #ifndef BALL_H__
 #define BALL_H__
 #include "Entity.h"
+#include "Window.h"
 
 class Ball : public Entity
 {
