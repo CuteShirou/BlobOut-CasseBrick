@@ -42,11 +42,13 @@ void Brick::Move()
 
 sf::Vector2<float> Brick::GetPos()
 {
-	return sf::Vector2<float>();
+	return brick.getPosition();
 }
 
 void Brick::SetPos(sf::Vector2<float> pos)
 {
+	posBrick = pos;
+	brick.setPosition(pos);
 }
 
 sf::Sprite Brick::SpriteDraw(std::string imgDirectory)
