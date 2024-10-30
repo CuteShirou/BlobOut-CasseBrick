@@ -1,10 +1,11 @@
 #include "pch.h"
 #include "Window.h"
+#include <iostream>
+#include <vector>
+
 #include "Paddle.h"
 #include "Brick.h"
 
-#include <iostream>
-#include <vector>
 
 int main()
 {
