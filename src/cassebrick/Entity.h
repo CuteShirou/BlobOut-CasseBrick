@@ -9,7 +9,7 @@
 class Entity
 {
 public:
-	Entity(sf::Vector2<float> pos);
+	Entity();
 	~Entity();
 	virtual void Destroy() = 0;
 	virtual void Move(Window&) = 0;
@@ -22,9 +22,7 @@ public:
 	virtual sf::FloatRect GetRectangle() = 0;
 
 
-	sf::FloatRect GetRectangle() const {
-		return sprite.getGlobalBounds();
-	}
+	
 
 
 protected:

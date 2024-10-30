@@ -14,7 +14,7 @@ void Paddle::Destroy()
 {
 }
 
-void Paddle::Move()
+void Paddle::Move(Window&)
 {
 
 }

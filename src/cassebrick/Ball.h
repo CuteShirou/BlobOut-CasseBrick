@@ -15,6 +15,7 @@ public:
 	void SpriteDraw(std::string imgDirectory) override;
 	void SetScale(float x, float y) override;
 	sf::Sprite GetSprite() override;
+	sf::FloatRect GetRectangle() override;
 
 
 protected:

@@ -15,19 +15,17 @@ int main()
 
     // Boucle principale
     while (window.IsRunning()) {
-        // Gestion des événements
-        window.PollEvents();
 
-        // Déplacement de la balle
-        ball.Move();
 
-        // Efface la fenêtre avant de dessiner
         window.Clear();
 
-        // Dessin de la balle
-        ball.SpriteDraw("../../../src/cassebrick/ball.png");
+        window.PollEvents();
 
-        // Affiche ce qui a été dessiné
+        ball.Move(window);
+
+        ball.SpriteDraw("../../../src/cassebrick/ball.png");
+        window.Draw(ball.GetSprite());
+
         window.Display();
     }
 

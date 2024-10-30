@@ -60,7 +60,7 @@ bool Ball::OnCollision(Entity& entity)
 
 sf::Vector2<float> Ball::GetPos()
 {
-    return sf::Vector2<float>();
+    return pos;
 }
 
 void Ball::SetPos(sf::Vector2<float> pos)
@@ -78,9 +78,15 @@ sf::Sprite Ball::GetSprite()
     return sprite;
 }
 
+sf::FloatRect Ball::GetRectangle()
+{
+    return sprite.getGlobalBounds();
+}
+
 void Ball::SpriteDraw(std::string imgDirectory)
 {
+    texture.loadFromFile(imgDirectory);
     sprite.setTexture(texture);
-    sprite.setPosition(pos);
 }
+
 

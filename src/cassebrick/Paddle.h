@@ -9,7 +9,7 @@ public:
 	Paddle(sf::Vector2<float> pos);
 	~Paddle();
 	void Destroy() override;
-	void Move() override;
+	void Move(Window&) override;
 	bool OnCollision(Entity& entity) override;
 	sf::Vector2<float> GetPos() override;
 	void SetPos(sf::Vector2<float> pos) override;

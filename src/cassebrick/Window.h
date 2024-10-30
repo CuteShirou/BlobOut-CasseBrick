@@ -15,6 +15,7 @@ public:
 	void PollEvents();
 	bool IsRunning();
 	void Close();
+	void Draw(sf::Sprite sprite);
 	sf::RenderWindow& GetWindow();
 
 protected:

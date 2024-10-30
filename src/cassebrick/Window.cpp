@@ -16,6 +16,7 @@ void Window::CreateWindow(int width, int height)
 {
 
 	window.create(sf::VideoMode(width, height), "*test*");
+	window.setVerticalSyncEnabled(true);
 }
 
 void Window::Clear()
@@ -47,6 +48,11 @@ bool Window::IsRunning()
 void Window::Close()
 {
 	window.close();
+}
+
+void Window::Draw(sf::Sprite sprite)
+{
+	window.draw(sprite);
 }
 
 sf::RenderWindow& Window::GetWindow()
