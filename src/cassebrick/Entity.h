@@ -19,12 +19,6 @@ public:
 	virtual void SetPos(sf::Vector2<float> pos) = 0;
 	virtual void SetScale(float x, float y) = 0;
 	virtual sf::Sprite GetSprite() = 0;
-	virtual sf::FloatRect GetRectangle() = 0;
-
-
-	
-
-
 protected:
 	sf::Vector2<float> pos;
 	sf::Sprite sprite;
@@ -33,4 +27,3 @@ protected:
 
 
 #endif // !ENTITY_H__
-
