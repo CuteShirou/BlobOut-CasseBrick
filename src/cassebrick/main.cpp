@@ -2,6 +2,7 @@
 #include "Window.h"
 #include "Paddle.h"
 #include "Brick.h"
+#include "Ball.h"
 
 #include <iostream>
 #include <vector>

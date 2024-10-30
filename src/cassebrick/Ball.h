@@ -8,7 +8,7 @@ public:
 	Ball(sf::Vector2<float> pos, sf::Vector2<float> dir, float speed);
 	~Ball();
 	void Destroy() override;
-	void Move(Window&) override;
+	void Move(Window&);
 	bool OnCollision(Entity& entity) override;
 	sf::Vector2<float> GetPos() override;
 	void SetPos(sf::Vector2<float> pos) override;

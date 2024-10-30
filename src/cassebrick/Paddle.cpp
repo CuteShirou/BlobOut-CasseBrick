@@ -15,11 +15,6 @@ void Paddle::Destroy()
 {
 }
 
-
-void Paddle::Move(Window&)
-{
-}
-
 void Paddle::MovePaddle(sf::Vector2f dir)
 {
 	sprite.move(dir);
@@ -56,4 +51,9 @@ void Paddle::SetScale(float x, float y)
 sf::Sprite Paddle::GetSprite()
 {
 	return sprite;
+}
+
+sf::FloatRect Paddle::GetRectangle()
+{
+	return sprite.getGlobalBounds();
 }
