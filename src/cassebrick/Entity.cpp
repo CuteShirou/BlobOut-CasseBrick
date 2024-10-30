@@ -8,4 +8,3 @@ Entity::Entity()
 Entity::~Entity()
 {
 }
-

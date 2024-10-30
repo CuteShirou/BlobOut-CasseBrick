@@ -29,30 +29,29 @@ void Window::Display()
 	window.display();
 }
 
-
 void Window::PollEvents(Paddle* sprite) {
 	sf::Event event;
 	auto now = std::chrono::steady_clock::now();
 
-	// Gestion des événements
+	// Gestion des ï¿½vï¿½nements
 	while (window.pollEvent(event)) {
-		// Fenêtre fermée
+		// Fenï¿½tre fermï¿½e
 		if (event.type == sf::Event::Closed) {
 			window.close();
 		}
 
-		// Touche pressée
+		// Touche pressï¿½e
 		else if (event.type == sf::Event::KeyPressed) {
-			// Désactiver le contrôle de la souris
+			// Dï¿½sactiver le contrï¿½le de la souris
 			mouseControl = false;
 			lastKeyPressTime = now;
 
 			// Touche A
 			if (event.key.scancode == sf::Keyboard::Scan::A) {
-				// Si le paddle est dans la fenêtre, il peut bouger
+				// Si le paddle est dans la fenï¿½tre, il peut bouger
 				if (sprite->GetSprite().getPosition().x > 0) {
 					sprite->MovePaddle(sf::Vector2f(-8, 0));
-					// S'il dépasse la fenêtre dû à sa vitesse, le téléporte à la bordure 
+					// S'il dï¿½passe la fenï¿½tre dï¿½ ï¿½ sa vitesse, le tï¿½lï¿½porte ï¿½ la bordure 
 					if (sprite->GetPos().x <= 0) {
 						sprite->SetPos(sf::Vector2f(0, 500));
 					}
@@ -60,22 +59,22 @@ void Window::PollEvents(Paddle* sprite) {
 			}
 			// Touche D
 			else if (event.key.scancode == sf::Keyboard::Scan::D) {
-				// Si le paddle est dans la fenêtre, il peut bouger
+				// Si le paddle est dans la fenï¿½tre, il peut bouger
 				if (window.getSize().x > sprite->GetPos().x + sprite->GetSprite().getGlobalBounds().width) {
 					sprite->MovePaddle(sf::Vector2f(10, 0));
-					// S'il dépasse la fenêtre dû à sa vitesse, le téléporte à la bordure 
+					// S'il dï¿½passe la fenï¿½tre dï¿½ ï¿½ sa vitesse, le tï¿½lï¿½porte ï¿½ la bordure 
 					if (sprite->GetPos().x + sprite->GetSprite().getGlobalBounds().width >= window.getSize().x) {
 						sprite->SetPos(sf::Vector2f(window.getSize().x - sprite->GetSprite().getGlobalBounds().width, 500));
 					}
 				}
 			}
 		}
-		// Réactiver le contrôle par la souris après 200 ms sans appui de touche
+		// Rï¿½activer le contrï¿½le par la souris aprï¿½s 200 ms sans appui de touche
 		if (std::chrono::duration_cast<std::chrono::milliseconds>(now - lastKeyPressTime).count() > 200) {
 			mouseControl = true;
 		}
 
-		// Déplacement par la souris uniquement si le contrôle par la souris est actif
+		// Dï¿½placement par la souris uniquement si le contrï¿½le par la souris est actif
 		if (mouseControl) {
 			sf::Vector2i mouse = sf::Mouse::getPosition(window);
 			sprite->SetPos(sf::Vector2f(window.mapPixelToCoords(mouse).x - sprite->GetSprite().getGlobalBounds().width / 2, 500));
@@ -96,4 +95,9 @@ void Window::Close()
 void Window::Draw(sf::Sprite sprite)
 {
 	window.draw(sprite);
+}
+
+sf::RenderWindow& Window::GetWindow()
+{
+	return window;
 }
