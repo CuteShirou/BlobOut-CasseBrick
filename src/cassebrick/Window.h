@@ -4,6 +4,7 @@
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 #include <chrono>
+#include "Paddle.h"
 #include "Window.h"
 
 #include "Paddle.h"

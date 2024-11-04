@@ -1,15 +1,10 @@
 #include "pch.h"
-<<<<<<< Updated upstream
 #include "Ball.h"
 #include "Window.h"
-#include <math.h>
-
-=======
 #include <math.h>
 #include <iostream>
 #include "Ball.h"
-#include "Window.h"
->>>>>>> Stashed changes
+
 Ball::Ball(sf::Vector2<float> pos_, sf::Vector2<float> dir_, float speed_) : pos(pos_), dir(dir_), speed(speed_)
 {
 }
@@ -27,8 +22,9 @@ void Ball::Move(Window& w)
     sf::RenderWindow& window = w.GetWindow();
     pos.x += dir.x * speed;
     pos.y += dir.y * speed;
-
-    float angle = atan2(dir.y, dir.x) * 180 / 3.14159f;
+  
+    /*loat angle = atan2(dir.y, dir.x) * 180 / 3.14159f;
+    sprite.setRotation(angle);*/
 
     sf::FloatRect bounds = sprite.getGlobalBounds();
     if ((pos.x <= 0 && dir.x < 0) || (pos.x + bounds.width >= window.getSize().x && dir.x > 0)) {
@@ -45,8 +41,7 @@ void Ball::Move(Window& w)
 
    
     std::cout << pos.x << " : " << pos.y << std::endl << dir.x << " : " << dir.y << std::endl << std::endl;
-    sprite.setPosition(pos.x, pos.y);/*
-    sprite.setRotation(angle);*/
+    sprite.setPosition(pos.x, pos.y);
 }
 
 bool Ball::OnCollision(Entity& entity)
