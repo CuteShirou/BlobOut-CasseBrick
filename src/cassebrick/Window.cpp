@@ -27,6 +27,7 @@ void Window::Clear()
 
 void Window::Display()
 {
+	GetFPS();
 	window.display();
 }
 
@@ -107,4 +108,13 @@ void Window::Draw(sf::Sprite sprite)
 sf::RenderWindow& Window::GetWindow()
 {
 	return window;
+}
+
+void Window::GetFPS()
+{
+	fps = 1.0f / clock.getElapsedTime().asSeconds();
+
+	std::cout << "FPS : " << fps << std::endl;
+
+	clock.restart();
 }
