@@ -6,7 +6,7 @@
 #include <chrono>
 #include "Paddle.h"
 #include "Window.h"
-
+#include "Particle.h"
 #include "Paddle.h"
 
 class Window
@@ -21,6 +21,7 @@ public:
 	bool IsRunning();
 	void Close();
 	void Draw(sf::Sprite sprite);
+	void DrawParticle(ParticleSystem particle);
 	sf::RenderWindow& GetWindow();
 	void GetFPS();
 

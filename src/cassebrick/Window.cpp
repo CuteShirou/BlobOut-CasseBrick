@@ -105,6 +105,11 @@ void Window::Draw(sf::Sprite sprite)
 	window.draw(sprite);
 }
 
+void Window::DrawParticle(ParticleSystem particle)
+{
+	window.draw(particle);
+}
+
 sf::RenderWindow& Window::GetWindow()
 {
 	return window;
