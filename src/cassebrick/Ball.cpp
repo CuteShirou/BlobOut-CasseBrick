@@ -1,7 +1,9 @@
 #include "pch.h"
-#include <math.h>
 #include "Ball.h"
 #include "Window.h"
+#include <math.h>
+#include <iostream>
+#include "Ball.h"
 
 Ball::Ball(sf::Vector2<float> pos_, sf::Vector2<float> dir_, float speed_) : pos(pos_), dir(dir_), speed(speed_)
 {
@@ -20,8 +22,7 @@ void Ball::Move(Window& w)
     sf::RenderWindow& window = w.GetWindow();
     pos.x += dir.x * speed;
     pos.y += dir.y * speed;
-    sprite.setPosition(pos.x, pos.y);
-
+  
     /*loat angle = atan2(dir.y, dir.x) * 180 / 3.14159f;
     sprite.setRotation(angle);*/
 
@@ -33,6 +34,7 @@ void Ball::Move(Window& w)
     if ((pos.y <= 0 && dir.y < 0) || (pos.y + bounds.height >= window.getSize().y && dir.y > 0)) {
         dir.y = -dir.y;
     }
+    sprite.setPosition(pos.x, pos.y);
 }
 
 bool Ball::OnCollision(Entity& entity)
@@ -40,21 +42,34 @@ bool Ball::OnCollision(Entity& entity)
     sf::FloatRect ballBounds = GetRectangle();
     sf::FloatRect entityBounds = entity.GetRectangle();
 
-    if ((ballBounds.left < entityBounds.left && ballBounds.left + ballBounds.width > entityBounds.left) ||
-        (ballBounds.left + ballBounds.width > entityBounds.left + entityBounds.width && ballBounds.left < entityBounds.left + entityBounds.width))
-    {
-        dir.x = -dir.x;
-        return true;
+    if (ballBounds.intersects(entityBounds)) {
+        // Calcul de l'overlap sur chaque côté de la brique
+        float overlapLeft = (entityBounds.left + entityBounds.width) - ballBounds.left;
+        float overlapRight = (ballBounds.left + ballBounds.width) - entityBounds.left;
+        float overlapTop = (entityBounds.top + entityBounds.height) - ballBounds.top;
+        float overlapBottom = (ballBounds.top + ballBounds.height) - entityBounds.top;
+
+        // Déterminer le côté de collision
+        bool fromLeft = std::abs(overlapLeft) < std::abs(overlapRight);
+        bool fromTop = std::abs(overlapTop) < std::abs(overlapBottom);
+
+        float minOverlapX = fromLeft ? overlapLeft : overlapRight;
+        float minOverlapY = fromTop ? overlapTop : overlapBottom;
+
+        // Inverser la direction en fonction du côté touché
+        if (std::abs(minOverlapX) < std::abs(minOverlapY)) {
+            // Rebond sur le côté gauche ou droit, inversion de dir.x
+            dir.x = -dir.x;
+        }
+        else {
+            // Rebond sur le côté supérieur ou inférieur, inversion de dir.y
+            dir.y = -dir.y;
+        }
+
+        return true; // Collision détectée et gérée
     }
 
-    if ((ballBounds.top < entityBounds.top && ballBounds.top + ballBounds.height > entityBounds.top) ||
-        (ballBounds.top + ballBounds.height > entityBounds.top + entityBounds.height && ballBounds.top < entityBounds.top + entityBounds.height))
-    {
-        dir.y = -dir.y;
-        return true;
-    }
-
-    return false;
+    return false; // Pas de collision
 }
 
 

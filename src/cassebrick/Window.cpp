@@ -27,6 +27,7 @@ void Window::Clear()
 
 void Window::Display()
 {
+	GetFPS();
 	window.display();
 }
 

@@ -5,6 +5,8 @@
 #include <iostream>
 #include "Entity.h"
 
+#include "Entity.h"
+
 class Paddle : public Entity
 {
 public:

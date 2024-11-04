@@ -62,5 +62,5 @@ sf::Sprite Brick::GetSprite()
 
 sf::FloatRect Brick::GetRectangle()
 {
-	return sprite.getGlobalBounds();
+	return brick.getGlobalBounds();
 }
