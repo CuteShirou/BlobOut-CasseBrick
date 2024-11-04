@@ -4,7 +4,7 @@
 #include "Window.h"
 #include "Paddle.h"
 #include "Brick.h"
-#include "ball.h"
+#include "Ball.h"
 
 int main()
 {
@@ -72,7 +72,7 @@ int main()
             }
             it->SpriteDraw("Romain Giovannini le GOAT");
             window.Draw(it->GetSprite());
-                ++it;  // Avancer l'itérateur seulement si aucune suppression
+            ++it;
         }
 
         window.Display();
