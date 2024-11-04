@@ -22,8 +22,8 @@ void Ball::Move(Window& w)
     pos.y += dir.y * speed;
     sprite.setPosition(pos.x, pos.y);
 
-    float angle = atan2(dir.y, dir.x) * 180 / 3.14159f;
-    sprite.setRotation(angle);
+    /*loat angle = atan2(dir.y, dir.x) * 180 / 3.14159f;
+    sprite.setRotation(angle);*/
 
     sf::FloatRect bounds = sprite.getGlobalBounds();
     if ((pos.x <= 0 && dir.x < 0) || (pos.x + bounds.width >= window.getSize().x && dir.x > 0)) {
