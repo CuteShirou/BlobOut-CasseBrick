@@ -8,11 +8,11 @@
 
 int main()
 {
-    sf::Vector2f paddlePos(350, 500);
-    Paddle* paddle = new Paddle(paddlePos);
-
     Window window;
     window.CreateWindow(800, 600);
+
+    sf::Vector2f paddlePos(350, 500);
+    Paddle* paddle = new Paddle(sf::Vector2(350.f,500.f));
 
     // Initialisation de la balle
     sf::Vector2f ballPos(400, 300); // Position initiale de la balle
@@ -76,6 +76,7 @@ int main()
         }
 
         window.Display();
+        window.GetFPS();
     }
 
 #ifdef _DEBUG

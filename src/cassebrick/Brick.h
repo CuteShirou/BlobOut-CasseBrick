@@ -13,6 +13,7 @@ protected :
 	sf::Texture texture;
 	bool m_IsDestroyed;
 	sf::Vector2<float> posBrick;
+
 public:
 	Brick(sf::Vector2<float> posBrick, sf::Vector2<float> size);
 	~Brick();
@@ -26,6 +27,8 @@ public:
 	void SetScale(float x, float y) override;
 	sf::Sprite GetSprite() override;
 	sf::FloatRect GetRectangle() override;
+	void LoadTexture(std::string imgDirectory);
+	
 };
 
 #endif // BRICK_H__
