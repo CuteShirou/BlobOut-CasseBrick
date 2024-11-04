@@ -41,6 +41,12 @@ int main()
         }
     }
 
+    for (auto it = bricks.begin(); it != bricks.end(); ) {
+            it->SetScale(BrickScale.x, BrickScale.y);
+            it->SetPos(it->GetPos());
+            ++it;  // Avancer l'itérateur seulement si aucune suppression
+        }
+
     // Boucle principale
     while (true) {
         window.Clear();
@@ -56,14 +62,17 @@ int main()
         paddle->SetScale(1, 1.2);
         window.Draw(paddle->GetSprite());
 
+        ball.OnCollision(*paddle);
+
         // Dessiner chaque brique
-        for (auto& brick : bricks) {
-            if (!brick.IsDestroyed()) {
-                brick.SpriteDraw("../../../src/cassebrick/BRICK.png");
-                brick.SetScale(BrickScale.x, BrickScale.y);
-                brick.SetPos(brick.GetPos());
-                window.Draw(brick.GetSprite());
+        for (auto it = bricks.begin(); it != bricks.end(); ) {
+            if (ball.OnCollision(*it)) {
+                it->Destroy();  // Détruire la brique
+                it = bricks.erase(it);  // Supprimer la brique et obtenir un nouvel itérateur valide
             }
+            it->SpriteDraw("Romain Giovannini le GOAT");
+            window.Draw(it->GetSprite());
+            ++it;
         }
 
         window.Display();

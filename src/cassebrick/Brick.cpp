@@ -4,6 +4,7 @@
 Brick::Brick(sf::Vector2<float> posBrick, sf::Vector2<float> size) : posBrick(posBrick), m_IsDestroyed(false)
 {
 	brick.setPosition(posBrick);
+	texture.loadFromFile("../../../src/cassebrick/BRICK.png");
 }
 
 Brick::~Brick()
@@ -46,7 +47,6 @@ void Brick::SetPos(sf::Vector2<float> pos)
 
 void Brick::SpriteDraw(std::string imgDirectory)
 {
-	texture.loadFromFile(imgDirectory);
 	brick.setTexture(texture);
 }
 
@@ -62,5 +62,5 @@ sf::Sprite Brick::GetSprite()
 
 sf::FloatRect Brick::GetRectangle()
 {
-	return sprite.getGlobalBounds();
+	return brick.getGlobalBounds();
 }
