@@ -20,11 +20,14 @@ public:
 	void Close();
 	void Draw(sf::Sprite sprite);
 	sf::RenderWindow& GetWindow();
+	void GetFPS();
 
 protected:
 	sf::RenderWindow window;
 	bool mouseControl = true;
 	std::chrono::steady_clock::time_point lastKeyPressTime = std::chrono::steady_clock::now();
+	float fps;
+	sf::Clock clock;
 };
 
 

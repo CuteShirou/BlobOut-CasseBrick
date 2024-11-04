@@ -108,3 +108,12 @@ sf::RenderWindow& Window::GetWindow()
 {
 	return window;
 }
+
+void Window::GetFPS()
+{
+	fps = 1.0f / clock.getElapsedTime().asSeconds();
+
+	std::cout << "FPS : " << fps << std::endl;
+
+	clock.restart();
+}
