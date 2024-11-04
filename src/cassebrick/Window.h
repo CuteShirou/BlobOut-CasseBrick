@@ -6,8 +6,7 @@
 #include <chrono>
 #include "Paddle.h"
 #include "Window.h"
-
-#include "Paddle.h"
+#include "Score.h"
 
 class Window
 {
@@ -21,6 +20,7 @@ public:
 	bool IsRunning();
 	void Close();
 	void Draw(sf::Sprite sprite);
+	void DrawScore(sf::Text score);
 	sf::RenderWindow& GetWindow();
 	void GetFPS();
 

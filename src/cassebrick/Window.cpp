@@ -1,6 +1,7 @@
 #include "pch.h"
-#include "Window.h"
 #include <chrono>
+#include "Window.h"
+#include "Score.h"
 
 
 Window::Window()
@@ -16,7 +17,7 @@ Window::~Window()
 void Window::CreateWindow(int width, int height)
 {
 
-	window.create(sf::VideoMode(width, height), "*test*");
+	window.create(sf::VideoMode(width, height), "Casse-Brick V1.5465454");
 	window.setVerticalSyncEnabled(true);
 }
 
@@ -103,6 +104,11 @@ void Window::Close()
 void Window::Draw(sf::Sprite sprite)
 {
 	window.draw(sprite);
+}
+
+void Window::DrawScore(sf::Text score)
+{
+	window.draw(score);
 }
 
 sf::RenderWindow& Window::GetWindow()

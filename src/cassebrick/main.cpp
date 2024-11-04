@@ -5,6 +5,7 @@
 #include "Paddle.h"
 #include "Brick.h"
 #include "Ball.h"
+#include "Score.h"
 
 int main()
 {
@@ -13,6 +14,9 @@ int main()
 
     Window window;
     window.CreateWindow(800, 600);
+    
+    Score score;
+	score.SetTextPos(sf::Vector2f(50, 50));
 
     // Initialisation de la balle
     sf::Vector2f ballPos(400, 300); // Position initiale de la balle
@@ -25,7 +29,7 @@ int main()
 
     // Dimensions de la brique et configuration du motif
     sf::Vector2<float> BrickScale(0.5, 0.5); // Taille de chaque brique
-    int rows = 5; // Nombre de lignes de briques
+    int rows = 8; // Nombre de lignes de briques
     int cols = 13; // Nombre de colonnes de briques
     float startX = 10; // Position de départ en X
     float startY = 80; // Position de départ en Y
@@ -69,12 +73,14 @@ int main()
             if (ball.OnCollision(*it)) {
                 it->Destroy();  // Détruire la brique
                 it = bricks.erase(it);  // Supprimer la brique et obtenir un nouvel itérateur valide
+				score.Increase(100);  // Augmenter le score
             }
             it->SpriteDraw("Romain Giovannini le GOAT");
             window.Draw(it->GetSprite());
             ++it;
         }
 
+        window.DrawScore(score.GetScoreText());
         window.Display();
     }
 
