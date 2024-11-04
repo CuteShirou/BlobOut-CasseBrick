@@ -1,16 +1,24 @@
 #include "pch.h"
-#include "main.h"
+#include <iostream>
+#include <vector>
 #include "Window.h"
 #include "Paddle.h"
 #include "Brick.h"
-
-#include <iostream>
-#include <vector>
+#include "Ball.h"
 
 int main()
 {
+    sf::Vector2f paddlePos(350, 500);
+    Paddle* paddle = new Paddle(paddlePos);
+
     Window window;
     window.CreateWindow(800, 600);
+
+    // Initialisation de la balle
+    sf::Vector2f ballPos(400, 300); // Position initiale de la balle
+    sf::Vector2f ballDir(0.5f, -0.5f); // Direction initiale de la balle
+    float ballSpeed = 5.0f; // Vitesse de la balle
+    Ball ball(ballPos, ballDir, ballSpeed); // Création de la balle
 
     // Vecteur pour stocker les briques
     std::vector<Brick> bricks;
@@ -33,15 +41,26 @@ int main()
         }
     }
 
+    // Boucle principale
     while (true) {
-        window.PollEvents();
         window.Clear();
+        window.PollEvents(paddle);
+
+        // Mise à jour et dessin de la balle
+        ball.Move(window); // Déplace la balle en fonction des bordures
+        ball.SpriteDraw("../../../src/cassebrick/ball.png"); // Chemin de texture
+        window.Draw(ball.GetSprite()); // Dessin de la balle
+
+        // Mise à jour et dessin du paddle
+        paddle->SpriteDraw("../../../src/cassebrick/paddle.png");
+        paddle->SetScale(1, 1.2);
+        window.Draw(paddle->GetSprite());
 
         // Dessiner chaque brique
         for (auto& brick : bricks) {
             if (!brick.IsDestroyed()) {
                 brick.SpriteDraw("../../../src/cassebrick/BRICK.png");
-				brick.SetScale(BrickScale.x, BrickScale.y);
+                brick.SetScale(BrickScale.x, BrickScale.y);
                 brick.SetPos(brick.GetPos());
                 window.Draw(brick.GetSprite());
             }

@@ -33,10 +33,6 @@ void Brick::Draw(sf::RenderWindow& window)
 	}
 }
 
-void Brick::Move()
-{
-}
-
 sf::Vector2<float> Brick::GetPos()
 {
 	return brick.getPosition();
@@ -62,4 +58,9 @@ void Brick::SetScale(float x, float y)
 sf::Sprite Brick::GetSprite()
 {
 	return brick;
+}
+
+sf::FloatRect Brick::GetRectangle()
+{
+	return sprite.getGlobalBounds();
 }

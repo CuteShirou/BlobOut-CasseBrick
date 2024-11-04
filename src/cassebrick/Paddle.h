@@ -1,7 +1,9 @@
-#pragma once
+#ifndef PADDLE_H__
+#define PADDLE_H__
+
 #include <SFML/Graphics.hpp>
-#include "Entity.h"
 #include <iostream>
+#include "Entity.h"
 
 class Paddle : public Entity
 {
@@ -9,7 +11,6 @@ public:
 	Paddle(sf::Vector2<float> pos);
 	~Paddle();
 	void Destroy() override;
-	void Move() override;
 	void MovePaddle(sf::Vector2f dir);
 	bool OnCollision(Entity& entity) override;
 	sf::Vector2<float> GetPos() override;
@@ -17,6 +18,7 @@ public:
 	void SpriteDraw(std::string imgDirectory) override;
 	void SetScale(float x, float y) override;
 	sf::Sprite GetSprite() override;
+	sf::FloatRect GetRectangle() override;
 
 protected:
 	sf::Vector2<float> pos;
@@ -24,3 +26,4 @@ protected:
 	sf::Texture texture;
 };
 
+#endif

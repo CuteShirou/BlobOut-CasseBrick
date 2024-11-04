@@ -3,8 +3,9 @@
 
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
-#include "Paddle.h"
 #include <chrono>
+#include "Paddle.h"
+#include "Window.h"
 
 class Window
 {
@@ -18,7 +19,7 @@ public:
 	bool IsRunning();
 	void Close();
 	void Draw(sf::Sprite sprite);
-	
+	sf::RenderWindow& GetWindow();
 
 protected:
 	sf::RenderWindow window;
