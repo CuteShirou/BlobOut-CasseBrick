@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <vector>
+
 #include "Entity.h"
 
 class Brick : public Entity

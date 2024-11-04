@@ -4,7 +4,6 @@
 #include "Window.h"
 #include "Paddle.h"
 #include "Brick.h"
-#include "Ball.h"
 
 int main()
 {

@@ -7,6 +7,8 @@
 #include "Paddle.h"
 #include "Window.h"
 
+#include "Paddle.h"
+
 class Window
 {
 public:
