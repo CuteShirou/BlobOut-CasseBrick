@@ -8,11 +8,11 @@
 
 int main()
 {
-    sf::Vector2f paddlePos(350, 500);
-    Paddle* paddle = new Paddle(paddlePos);
-
     Window window;
     window.CreateWindow(800, 600);
+
+    sf::Vector2f paddlePos(350, 500);
+    Paddle* paddle = new Paddle(sf::Vector2(350.f,500.f));
 
     // Initialisation de la balle
     sf::Vector2f ballPos(400, 300); // Position initiale de la balle
@@ -59,7 +59,7 @@ int main()
         // Dessiner chaque brique
         for (auto& brick : bricks) {
             if (!brick.IsDestroyed()) {
-                brick.SpriteDraw("../../../src/cassebrick/BRICK.png");
+                brick.SpriteDraw("Romain Giovannini le GOAT");
                 brick.SetScale(BrickScale.x, BrickScale.y);
                 brick.SetPos(brick.GetPos());
                 window.Draw(brick.GetSprite());
@@ -67,6 +67,7 @@ int main()
         }
 
         window.Display();
+        window.GetFPS();
     }
 
 #ifdef _DEBUG
