@@ -15,9 +15,8 @@ int main()
     Window window;
     window.CreateWindow(800, 600);
 
-    // Charger le fond d'écran
     if (!window.SetBackground("../../../src/cassebrick/Wallpaper.png")) {
-        return -1;  // Quitter si le fond d'écran n'a pas pu être chargé
+        return -1;
     }
     
     Score score;

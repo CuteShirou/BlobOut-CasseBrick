@@ -65,7 +65,6 @@ bool Ball::OnCollision(Entity& entity)
             // Rebond sur le côté supérieur ou inférieur, inversion de dir.y
             dir.y = -dir.y;
         }
-
         return true; // Collision détectée et gérée
     }
 
@@ -103,5 +102,3 @@ void Ball::SpriteDraw(std::string imgDirectory)
     texture.loadFromFile(imgDirectory);
     sprite.setTexture(texture);
 }
-
-
