@@ -28,7 +28,7 @@ void Window::Clear()
 
 void Window::Display()
 {
-	GetFPS();
+	/*GetFPS();*/
 	window.display();
 }
 
@@ -111,6 +111,11 @@ void Window::Draw(sf::Sprite sprite)
 	window.draw(sprite);
 }
 
+void Window::DrawParticle(ParticleSystem particle)
+{
+	window.draw(particle);
+}
+
 sf::RenderWindow& Window::GetWindow()
 {
 	return window;
@@ -120,7 +125,7 @@ void Window::GetFPS()
 {
 	fps = 1.0f / clock.getElapsedTime().asSeconds();
 
-	std::cout << "FPS : " << fps << std::endl;
+	std::cout << "FPS: " << fps << std::endl;
 
 	clock.restart();
 }

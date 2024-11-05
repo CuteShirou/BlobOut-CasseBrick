@@ -7,6 +7,7 @@
 #include <cstdlib> // Pour rand()
 #include <ctime>   // Pour time()
 #include "Paddle.h"
+#include "Particle.h"
 
 class Window
 {
@@ -20,6 +21,7 @@ public:
 	bool IsRunning();
 	void Close();
 	void Draw(sf::Sprite sprite);
+	void DrawParticle(ParticleSystem particle);
 	sf::RenderWindow& GetWindow();
 	void GetFPS();
 	void ShakeWindow();
