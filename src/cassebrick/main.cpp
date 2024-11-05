@@ -5,12 +5,19 @@
 #include "Paddle.h"
 #include "Brick.h"
 #include "Ball.h"
+#include "Score.h"
 #include "Particle.h"
 
 int main()
 {
     Window window;
     window.CreateWindow(800, 600);
+
+    if (!window.SetBackground("../../../src/cassebrick/Wallpaper.png")) {
+        return -1;
+    }
+    
+    Score score;
 
     auto fpsTime = std::chrono::system_clock::now();
     float fps;
@@ -89,6 +96,8 @@ int main()
             if (ball.OnCollision(*it)) {
                 it->Destroy();  // Détruire la brique
                 it = bricks.erase(it);  // Supprimer la brique et obtenir un nouvel itérateur valide
+				        score.Increase(100);  // Augmenter le score
+				        std::cout << "Score: " << score.GetScore() << std::endl;
                 window.ShakeWindow();
                 window.MoveWindow();
             }
@@ -97,6 +106,8 @@ int main()
             ++it;
         }
 
+        window.DrawScore(score.GetScoreText());
+      
         auto currentTime = std::chrono::system_clock::now();
         fps = 1.0f / clock.getElapsedTime().asSeconds();
         if (currentTime - fpsTime > std::chrono::seconds(1)) {
@@ -111,6 +122,5 @@ int main()
 #ifdef _DEBUG
     _CrtDumpMemoryLeaks();
 #endif
-
     return 0;
 }
