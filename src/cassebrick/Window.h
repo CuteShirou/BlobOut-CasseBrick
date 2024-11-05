@@ -4,6 +4,8 @@
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 #include <chrono>
+#include <cstdlib> // Pour rand()
+#include <ctime>   // Pour time()
 #include "Paddle.h"
 #include "Particle.h"
 
@@ -22,6 +24,11 @@ public:
 	void DrawParticle(ParticleSystem particle);
 	sf::RenderWindow& GetWindow();
 	void GetFPS();
+	void ShakeWindow();
+	void MoveWindow();
+	void Update(int duration, int intensity);
+	
+	bool start = false;
 
 protected:
 	sf::RenderWindow window;
@@ -29,6 +36,12 @@ protected:
 	std::chrono::steady_clock::time_point lastKeyPressTime = std::chrono::steady_clock::now();
 	float fps;
 	sf::Clock clock;
+	sf::Clock shakeClock;
+	sf::Vector2i pos;
+	bool isShaking;
+	std::vector<sf::Vector2i> windowRandomPos;
+	int desktopWidth;
+	int desktopheight;
 };
 
 

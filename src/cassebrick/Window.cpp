@@ -5,7 +5,7 @@
 
 Window::Window()
 {
-
+	std::srand(static_cast<unsigned int>(std::time(nullptr)));
 }
 
 Window::~Window()
@@ -15,7 +15,8 @@ Window::~Window()
 
 void Window::CreateWindow(int width, int height)
 {
-
+	desktopWidth = sf::VideoMode::getDesktopMode().width;
+	desktopheight = sf::VideoMode::getDesktopMode().height;
 	window.create(sf::VideoMode(width, height), "*test*");
 	window.setVerticalSyncEnabled(true);
 }
@@ -47,6 +48,11 @@ void Window::PollEvents(Paddle* sprite) {
 			// Desactiver le controle de la souris
 			mouseControl = false;
 			lastKeyPressTime = now;
+
+			if (event.key.scancode == sf::Keyboard::Scan::Space) {
+				// déclenche le move de la ball
+				start = true;
+			}
 
 			// Touche A
 			if (event.key.scancode == sf::Keyboard::Scan::A) {
@@ -122,4 +128,38 @@ void Window::GetFPS()
 	std::cout << "FPS: " << fps << std::endl;
 
 	clock.restart();
+}
+
+void Window::ShakeWindow()
+{
+	shakeClock.restart(); // Redémarrer le chronomètre
+	isShaking = true; // Indiquer que le tremblement est actif
+}
+
+void Window::MoveWindow()
+{
+	int x = (rand() % (desktopWidth - (int)window.getSize().x));
+	int y = (rand() % (desktopheight - (int)window.getSize().y));
+	window.setPosition({ x, y });
+	pos = window.getPosition();
+}
+
+
+void Window::Update(int duration, int intensity)
+{
+	if (isShaking) {
+		// Vérifie si la durée du tremblement est écoulée
+		if (shakeClock.getElapsedTime().asMilliseconds() < duration) { // Utilisez duration ici
+			// Calcul des décalages aléatoires
+			int offsetX = (rand() % (intensity * 2)) - intensity; // Valeurs entre -intensity et intensity
+			int offsetY = (rand() % (intensity * 2)) - intensity; // Valeurs entre -intensity et intensity
+			// Déplace la fenêtre
+			window.setPosition({ pos.x + offsetX, pos.y + offsetY });
+		}
+		else {
+			// Remet la fenêtre à sa position d'origine
+			window.setPosition(pos);
+			isShaking = false; // Arrête le tremblement
+		}
+	}
 }
