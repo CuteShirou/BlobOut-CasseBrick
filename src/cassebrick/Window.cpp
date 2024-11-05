@@ -21,6 +21,7 @@ void Window::CreateWindow(int width, int height)
 	desktopheight = sf::VideoMode::getDesktopMode().height;
 	window.create(sf::VideoMode(width, height), "*test*");
 	window.setVerticalSyncEnabled(true);
+	window.setPosition({ (desktopWidth/2) - (int)window.getSize().x , (desktopheight/2) - (int)window.getSize().y });
 }
 
 bool Window::SetBackground(const std::string& filepath) {

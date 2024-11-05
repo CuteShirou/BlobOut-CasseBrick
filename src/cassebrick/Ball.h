@@ -11,7 +11,7 @@ public:
 	void Destroy() override;
 	void Move(Window&);
 	bool OnCollision(Entity& entity) override;
-	void CollisionPaddle(Paddle& paddle);
+	bool CollisionPaddle(Paddle& paddle);
 	sf::Vector2<float> GetPos() override;
 	void SetPos(sf::Vector2<float> pos) override;
 	void SpriteDraw(std::string imgDirectory) override;

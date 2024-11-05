@@ -87,7 +87,9 @@ int main()
         paddle->SetScale(1, 1.2);
         window.Draw(paddle->GetSprite());
 
-        ball.CollisionPaddle(*paddle);
+        if (ball.CollisionPaddle(*paddle)) 
+        {
+        }
 
         window.Update(500, 15);  
 

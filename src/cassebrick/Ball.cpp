@@ -81,7 +81,7 @@ bool Ball::OnCollision(Entity& entity)
     return false; // Pas de collision
 }
 
-void Ball::CollisionPaddle(Paddle& paddle)
+bool Ball::CollisionPaddle(Paddle& paddle)
 {
     sf::FloatRect ballBounds = GetRectangle();
     sf::FloatRect paddleBounds = paddle.GetRectangle();
@@ -99,7 +99,9 @@ void Ball::CollisionPaddle(Paddle& paddle)
         float length = std::sqrt(dir.x * dir.x + dir.y * dir.y);
         dir.x /= length;
         dir.y /= length;
+        return true;
     }
+    return false;
 }
 
 
