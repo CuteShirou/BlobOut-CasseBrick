@@ -4,6 +4,7 @@
 #include "Window.h"
 #include "Paddle.h"
 #include "Brick.h"
+#include "Ball.h"
 
 int main()
 {
@@ -14,8 +15,8 @@ int main()
     window.CreateWindow(800, 600);
 
     // Initialisation de la balle
-    sf::Vector2f ballPos(400, 300); // Position initiale de la balle
-    sf::Vector2f ballDir(0.5f, -0.5f); // Direction initiale de la balle
+    sf::Vector2f ballPos(400, 400); // Position initiale de la balle
+    sf::Vector2f ballDir(0.0f, -1.0f); // Direction initiale de la balle
     float ballSpeed = 5.0f; // Vitesse de la balle
     Ball ball(ballPos, ballDir, ballSpeed); // Création de la balle
 
@@ -40,6 +41,12 @@ int main()
         }
     }
 
+    for (auto it = bricks.begin(); it != bricks.end(); ) {
+            it->SetScale(BrickScale.x, BrickScale.y);
+            it->SetPos(it->GetPos());
+            ++it;  // Avancer l'itérateur seulement si aucune suppression
+        }
+
     // Boucle principale
     while (true) {
         window.Clear();
@@ -55,14 +62,21 @@ int main()
         paddle->SetScale(1, 1.2);
         window.Draw(paddle->GetSprite());
 
+        ball.CollisionPaddle(*paddle);
+
+        window.Update(500, 15);  
+
         // Dessiner chaque brique
-        for (auto& brick : bricks) {
-            if (!brick.IsDestroyed()) {
-                brick.SpriteDraw("../../../src/cassebrick/BRICK.png");
-                brick.SetScale(BrickScale.x, BrickScale.y);
-                brick.SetPos(brick.GetPos());
-                window.Draw(brick.GetSprite());
+        for (auto it = bricks.begin(); it != bricks.end(); ) {
+            if (ball.OnCollision(*it)) {
+                it->Destroy();  // Détruire la brique
+                it = bricks.erase(it);  // Supprimer la brique et obtenir un nouvel itérateur valide
+                window.ShakeWindow();
+                window.MoveWindow();
             }
+            it->SpriteDraw("Romain Giovannini le GOAT");
+            window.Draw(it->GetSprite());
+            ++it;
         }
 
         window.Display();

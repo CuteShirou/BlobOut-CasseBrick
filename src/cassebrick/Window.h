@@ -4,9 +4,8 @@
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 #include <chrono>
-#include "Paddle.h"
-#include "Window.h"
-
+#include <cstdlib> // Pour rand()
+#include <ctime>   // Pour time()
 #include "Paddle.h"
 
 class Window
@@ -22,11 +21,25 @@ public:
 	void Close();
 	void Draw(sf::Sprite sprite);
 	sf::RenderWindow& GetWindow();
+	void GetFPS();
+	void ShakeWindow();
+	void MoveWindow();
+	void Update(int duration, int intensity);
+	
+	bool start = false;
 
 protected:
 	sf::RenderWindow window;
 	bool mouseControl = true;
 	std::chrono::steady_clock::time_point lastKeyPressTime = std::chrono::steady_clock::now();
+	float fps;
+	sf::Clock clock;
+	sf::Clock shakeClock;
+	sf::Vector2i pos;
+	bool isShaking;
+	std::vector<sf::Vector2i> windowRandomPos;
+	int desktopWidth;
+	int desktopheight;
 };
 
 
