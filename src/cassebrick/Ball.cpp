@@ -40,6 +40,7 @@ void Ball::Move(Window& w)
     if (pos.y + bounds.height >= window.getSize().y && dir.y > 0)
     {
         w.start = false;
+        speed = 5.f;
         pos.x = 400;
         pos.y = 400;
         dir = { 0, -1 };
@@ -81,7 +82,7 @@ bool Ball::OnCollision(Entity& entity)
     return false; // Pas de collision
 }
 
-void Ball::CollisionPaddle(Paddle& paddle)
+bool Ball::CollisionPaddle(Paddle& paddle)
 {
     sf::FloatRect ballBounds = GetRectangle();
     sf::FloatRect paddleBounds = paddle.GetRectangle();
@@ -99,7 +100,9 @@ void Ball::CollisionPaddle(Paddle& paddle)
         float length = std::sqrt(dir.x * dir.x + dir.y * dir.y);
         dir.x /= length;
         dir.y /= length;
+        return true;
     }
+    return false;
 }
 
 
@@ -127,6 +130,16 @@ sf::Sprite Ball::GetSprite()
 sf::FloatRect Ball::GetRectangle()
 {
     return sprite.getGlobalBounds();
+}
+
+void Ball::IncreaseSpeed(float sp)
+{
+    speed *= sp;
+}
+
+void Ball::SetSpeed(float sp)
+{
+    speed = sp;
 }
 
 void Ball::SpriteDraw(std::string imgDirectory)

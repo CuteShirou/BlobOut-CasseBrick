@@ -87,7 +87,11 @@ int main()
         paddle->SetScale(1, 1.2);
         window.Draw(paddle->GetSprite());
 
-        ball.CollisionPaddle(*paddle);
+        if (ball.CollisionPaddle(*paddle))
+        {
+            /*window.MoveWindow();*/
+            ball.IncreaseSpeed(1.03);
+        }
 
         window.Update(500, 15);  
 
@@ -96,10 +100,8 @@ int main()
             if (ball.OnCollision(*it)) {
                 it->Destroy();  // Détruire la brique
                 it = bricks.erase(it);  // Supprimer la brique et obtenir un nouvel itérateur valide
-				        score.Increase(100);  // Augmenter le score
-				        std::cout << "Score: " << score.GetScore() << std::endl;
+				score.Increase(100);  // Augmenter le score
                 window.ShakeWindow();
-                window.MoveWindow();
             }
             it->SpriteDraw("Romain Giovannini le GOAT");
             window.Draw(it->GetSprite());
