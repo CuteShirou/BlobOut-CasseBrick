@@ -13,11 +13,11 @@ Score::Score() : score(0) {
     // Configuration de l'objet texte pour le score
     scoreText.setFont(font);
     scoreText.setString(sf::String("Score: 0"));
-    scoreText.setCharacterSize(100);            // Taille du texte
-    scoreText.setFillColor(sf::Color::White);   // Couleur du texte
-    scoreText.setPosition(10, 10);              // Position du texte dans la fenêtre
+    scoreText.setCharacterSize(35);                         // Taille du texte
+    scoreText.setFillColor(sf::Color(255, 255, 255, 192));  // Couleur du texte + Opacité
+    scoreText.setPosition(5, 5);                            // Position du texte dans la fenêtre
 }
-
+    
 // Remet le score à zéro
 void Score::Reset() {
     score = 0;
@@ -32,7 +32,7 @@ void Score::Increase(int points) {
 
 sf::Text Score::GetScoreText()
 {
-    return sf::Text();
+    return scoreText;
 }
 
 void Score::SetTextPos(sf::Vector2f pos)

@@ -23,6 +23,7 @@ public:
 	void DrawScore(sf::Text score);
 	sf::RenderWindow& GetWindow();
 	void GetFPS();
+	bool SetBackground(const std::string& filepath);
 
 protected:
 	sf::RenderWindow window;
@@ -30,6 +31,8 @@ protected:
 	std::chrono::steady_clock::time_point lastKeyPressTime = std::chrono::steady_clock::now();
 	float fps;
 	sf::Clock clock;
+	sf::Texture backgroundTexture;
+	sf::Sprite backgroundSprite;
 };
 
 

@@ -21,9 +21,19 @@ void Window::CreateWindow(int width, int height)
 	window.setVerticalSyncEnabled(true);
 }
 
+bool Window::SetBackground(const std::string& filepath) {
+	if (!backgroundTexture.loadFromFile(filepath)) {
+		std::cerr << "Erreur : Impossible de charger l'image de fond depuis " << filepath << std::endl;
+		return false;
+	}
+	backgroundSprite.setTexture(backgroundTexture);
+	return true;
+}
+
 void Window::Clear()
 {
 	window.clear(sf::Color::Black);
+	window.draw(backgroundSprite);
 }
 
 void Window::Display()
