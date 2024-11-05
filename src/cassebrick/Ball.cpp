@@ -3,7 +3,6 @@
 #include "Window.h"
 #include <math.h>
 #include <iostream>
-#include "Ball.h"
 
 Ball::Ball(sf::Vector2<float> pos_, sf::Vector2<float> dir_, float speed_) : pos(pos_), dir(dir_), speed(speed_)
 {
