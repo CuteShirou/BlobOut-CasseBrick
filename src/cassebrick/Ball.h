@@ -19,7 +19,6 @@ public:
 	sf::Sprite GetSprite() override;
 	sf::FloatRect GetRectangle() override;
 
-
 protected:
 
 	sf::Vector2<float> pos;
