@@ -12,6 +12,9 @@ int main()
     Window window;
     window.CreateWindow(800, 600);
 
+    auto fpsTime = std::chrono::system_clock::now();
+    float fps;
+
     sf::Vector2f paddlePos(350, 500);
     Paddle* paddle = new Paddle(sf::Vector2(350.f,500.f));
 
@@ -22,7 +25,7 @@ int main()
     Ball ball(ballPos, ballDir, ballSpeed); // Création de la balle
 
     // Particules
-    ParticleSystem particles(1000);
+    ParticleSystem particles(5000);
 
     // Vecteur pour stocker les briques
     std::vector<Brick> bricks;
@@ -90,8 +93,15 @@ int main()
             ++it;
         }
 
+        auto currentTime = std::chrono::system_clock::now();
+        fps = 1.0f / clock.getElapsedTime().asSeconds();
+        if (currentTime - fpsTime > std::chrono::seconds(1)) {
+            fpsTime = currentTime;
+            system("CLS");
+            std::cout << "FPS: " << fps << std::endl;
+        }
+
         window.Display();
-        window.GetFPS();
     }
 
 #ifdef _DEBUG
