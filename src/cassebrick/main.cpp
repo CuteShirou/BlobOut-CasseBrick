@@ -14,9 +14,13 @@ int main()
 
     Window window;
     window.CreateWindow(800, 600);
+
+    // Charger le fond d'écran
+    if (!window.SetBackground("../../../src/cassebrick/Wallpaper.png")) {
+        return -1;  // Quitter si le fond d'écran n'a pas pu être chargé
+    }
     
     Score score;
-	score.SetTextPos(sf::Vector2f(50, 50));
 
     // Initialisation de la balle
     sf::Vector2f ballPos(400, 300); // Position initiale de la balle
@@ -29,7 +33,7 @@ int main()
 
     // Dimensions de la brique et configuration du motif
     sf::Vector2<float> BrickScale(0.5, 0.5); // Taille de chaque brique
-    int rows = 8; // Nombre de lignes de briques
+    int rows = 5; // Nombre de lignes de briques
     int cols = 13; // Nombre de colonnes de briques
     float startX = 10; // Position de départ en X
     float startY = 80; // Position de départ en Y
@@ -74,6 +78,7 @@ int main()
                 it->Destroy();  // Détruire la brique
                 it = bricks.erase(it);  // Supprimer la brique et obtenir un nouvel itérateur valide
 				score.Increase(100);  // Augmenter le score
+				std::cout << "Score: " << score.GetScore() << std::endl;
             }
             it->SpriteDraw("Romain Giovannini le GOAT");
             window.Draw(it->GetSprite());
@@ -87,6 +92,5 @@ int main()
 #ifdef _DEBUG
     _CrtDumpMemoryLeaks();
 #endif
-
     return 0;
 }
