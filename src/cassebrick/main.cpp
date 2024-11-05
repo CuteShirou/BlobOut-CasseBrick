@@ -15,8 +15,8 @@ int main()
     window.CreateWindow(800, 600);
 
     // Initialisation de la balle
-    sf::Vector2f ballPos(400, 300); // Position initiale de la balle
-    sf::Vector2f ballDir(0.5f, -0.5f); // Direction initiale de la balle
+    sf::Vector2f ballPos(400, 400); // Position initiale de la balle
+    sf::Vector2f ballDir(0.0f, -1.0f); // Direction initiale de la balle
     float ballSpeed = 5.0f; // Vitesse de la balle
     Ball ball(ballPos, ballDir, ballSpeed); // Création de la balle
 
@@ -62,13 +62,17 @@ int main()
         paddle->SetScale(1, 1.2);
         window.Draw(paddle->GetSprite());
 
-        ball.OnCollision(*paddle);
+        ball.CollisionPaddle(*paddle);
+
+        window.Update(500, 15);  
 
         // Dessiner chaque brique
         for (auto it = bricks.begin(); it != bricks.end(); ) {
             if (ball.OnCollision(*it)) {
                 it->Destroy();  // Détruire la brique
                 it = bricks.erase(it);  // Supprimer la brique et obtenir un nouvel itérateur valide
+                window.ShakeWindow();
+                window.MoveWindow();
             }
             it->SpriteDraw("Romain Giovannini le GOAT");
             window.Draw(it->GetSprite());
