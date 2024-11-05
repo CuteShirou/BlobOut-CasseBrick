@@ -4,9 +4,11 @@
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 #include <chrono>
+#include <cstdlib> // Pour rand()
+#include <ctime>   // Pour time()
 #include "Paddle.h"
-#include "Window.h"
 #include "Score.h"
+#include "Particle.h"
 
 class Window
 {
@@ -21,9 +23,14 @@ public:
 	void Close();
 	void Draw(sf::Sprite sprite);
 	void DrawScore(sf::Text score);
+	bool SetBackground(const std::string& filepath);
+	void DrawParticle(ParticleSystem particle);
 	sf::RenderWindow& GetWindow();
 	void GetFPS();
-	bool SetBackground(const std::string& filepath);
+	void ShakeWindow();
+	void MoveWindow();
+	void Update(int duration, int intensity);
+	bool start = false;
 
 protected:
 	sf::RenderWindow window;
@@ -33,6 +40,12 @@ protected:
 	sf::Clock clock;
 	sf::Texture backgroundTexture;
 	sf::Sprite backgroundSprite;
+	sf::Clock shakeClock;
+	sf::Vector2i pos;
+	bool isShaking;
+	std::vector<sf::Vector2i> windowRandomPos;
+	int desktopWidth;
+	int desktopheight;
 };
 
 
