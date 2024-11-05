@@ -5,20 +5,34 @@
 #include "Paddle.h"
 #include "Brick.h"
 #include "Ball.h"
+#include "Score.h"
+#include "Particle.h"
 
 int main()
 {
-    sf::Vector2f paddlePos(350, 500);
-    Paddle* paddle = new Paddle(paddlePos);
-
     Window window;
     window.CreateWindow(800, 600);
+
+    if (!window.SetBackground("../../../src/cassebrick/Wallpaper.png")) {
+        return -1;
+    }
+    
+    Score score;
+
+    auto fpsTime = std::chrono::system_clock::now();
+    float fps;
+
+    sf::Vector2f paddlePos(350, 500);
+    Paddle* paddle = new Paddle(sf::Vector2(350.f,500.f));
 
     // Initialisation de la balle
     sf::Vector2f ballPos(400, 400); // Position initiale de la balle
     sf::Vector2f ballDir(0.0f, -1.0f); // Direction initiale de la balle
     float ballSpeed = 5.0f; // Vitesse de la balle
     Ball ball(ballPos, ballDir, ballSpeed); // Création de la balle
+
+    // Particules
+    ParticleSystem particles(5000);
 
     // Vecteur pour stocker les briques
     std::vector<Brick> bricks;
@@ -47,6 +61,8 @@ int main()
             ++it;  // Avancer l'itérateur seulement si aucune suppression
         }
 
+    sf::Clock clock;
+
     // Boucle principale
     while (true) {
         window.Clear();
@@ -56,6 +72,15 @@ int main()
         ball.Move(window); // Déplace la balle en fonction des bordures
         ball.SpriteDraw("../../../src/cassebrick/ball.png"); // Chemin de texture
         window.Draw(ball.GetSprite()); // Dessin de la balle
+
+        // Mise à jour des particules
+        sf::Vector2i ballPosInt = static_cast <sf::Vector2i>(ball.GetPos());
+        ballPosInt = ballPosInt + sf::Vector2i(ball.GetRectangle().height / 2, ball.GetRectangle().width / 2);
+        particles.SetEmitter(window.GetWindow().mapPixelToCoords(ballPosInt));
+
+        sf::Time elapsed = clock.restart();
+        particles.Update(elapsed);
+        window.DrawParticle(particles);
 
         // Mise à jour et dessin du paddle
         paddle->SpriteDraw("../../../src/cassebrick/paddle.png");
@@ -71,6 +96,8 @@ int main()
             if (ball.OnCollision(*it)) {
                 it->Destroy();  // Détruire la brique
                 it = bricks.erase(it);  // Supprimer la brique et obtenir un nouvel itérateur valide
+				        score.Increase(100);  // Augmenter le score
+				        std::cout << "Score: " << score.GetScore() << std::endl;
                 window.ShakeWindow();
                 window.MoveWindow();
             }
@@ -79,12 +106,21 @@ int main()
             ++it;
         }
 
+        window.DrawScore(score.GetScoreText());
+      
+        auto currentTime = std::chrono::system_clock::now();
+        fps = 1.0f / clock.getElapsedTime().asSeconds();
+        if (currentTime - fpsTime > std::chrono::seconds(1)) {
+            fpsTime = currentTime;
+            system("CLS");
+            std::cout << "FPS: " << fps << std::endl;
+        }
+
         window.Display();
     }
 
 #ifdef _DEBUG
     _CrtDumpMemoryLeaks();
 #endif
-
     return 0;
 }

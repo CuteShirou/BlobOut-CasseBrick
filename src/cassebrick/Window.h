@@ -7,6 +7,8 @@
 #include <cstdlib> // Pour rand()
 #include <ctime>   // Pour time()
 #include "Paddle.h"
+#include "Score.h"
+#include "Particle.h"
 
 class Window
 {
@@ -20,12 +22,14 @@ public:
 	bool IsRunning();
 	void Close();
 	void Draw(sf::Sprite sprite);
+	void DrawScore(sf::Text score);
+	bool SetBackground(const std::string& filepath);
+	void DrawParticle(ParticleSystem particle);
 	sf::RenderWindow& GetWindow();
 	void GetFPS();
 	void ShakeWindow();
 	void MoveWindow();
 	void Update(int duration, int intensity);
-	
 	bool start = false;
 
 protected:
@@ -34,6 +38,8 @@ protected:
 	std::chrono::steady_clock::time_point lastKeyPressTime = std::chrono::steady_clock::now();
 	float fps;
 	sf::Clock clock;
+	sf::Texture backgroundTexture;
+	sf::Sprite backgroundSprite;
 	sf::Clock shakeClock;
 	sf::Vector2i pos;
 	bool isShaking;

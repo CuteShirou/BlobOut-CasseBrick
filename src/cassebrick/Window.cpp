@@ -1,6 +1,7 @@
 #include "pch.h"
-#include "Window.h"
 #include <chrono>
+#include "Window.h"
+#include "Score.h"
 
 
 Window::Window()
@@ -15,20 +16,31 @@ Window::~Window()
 
 void Window::CreateWindow(int width, int height)
 {
+
 	desktopWidth = sf::VideoMode::getDesktopMode().width;
 	desktopheight = sf::VideoMode::getDesktopMode().height;
 	window.create(sf::VideoMode(width, height), "*test*");
 	window.setVerticalSyncEnabled(true);
 }
 
+bool Window::SetBackground(const std::string& filepath) {
+	if (!backgroundTexture.loadFromFile(filepath)) {
+		std::cerr << "Erreur : Impossible de charger l'image de fond depuis " << filepath << std::endl;
+		return false;
+	}
+	backgroundSprite.setTexture(backgroundTexture);
+	return true;
+}
+
 void Window::Clear()
 {
 	window.clear(sf::Color::Black);
+	window.draw(backgroundSprite);
 }
 
 void Window::Display()
 {
-	GetFPS();
+	/*GetFPS();*/
 	window.display();
 }
 
@@ -111,6 +123,16 @@ void Window::Draw(sf::Sprite sprite)
 	window.draw(sprite);
 }
 
+void Window::DrawScore(sf::Text score)
+{
+	window.draw(score);
+}
+
+void Window::DrawParticle(ParticleSystem particle)
+{
+	window.draw(particle);
+}
+
 sf::RenderWindow& Window::GetWindow()
 {
 	return window;
@@ -120,7 +142,7 @@ void Window::GetFPS()
 {
 	fps = 1.0f / clock.getElapsedTime().asSeconds();
 
-	std::cout << "FPS : " << fps << std::endl;
+	std::cout << "FPS: " << fps << std::endl;
 
 	clock.restart();
 }
