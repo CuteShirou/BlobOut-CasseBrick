@@ -5,9 +5,7 @@
 #include <SFML/Graphics.hpp>
 #include <chrono>
 #include "Paddle.h"
-#include "Window.h"
 #include "Particle.h"
-#include "Paddle.h"
 
 class Window
 {

@@ -27,7 +27,7 @@ void Window::Clear()
 
 void Window::Display()
 {
-	GetFPS();
+	/*GetFPS();*/
 	window.display();
 }
 
@@ -119,7 +119,7 @@ void Window::GetFPS()
 {
 	fps = 1.0f / clock.getElapsedTime().asSeconds();
 
-	std::cout << "FPS : " << fps << std::endl;
+	std::cout << "FPS: " << fps << std::endl;
 
 	clock.restart();
 }
