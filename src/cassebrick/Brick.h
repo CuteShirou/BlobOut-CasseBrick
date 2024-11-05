@@ -27,7 +27,6 @@ public:
 	void SetScale(float x, float y) override;
 	sf::Sprite GetSprite() override;
 	sf::FloatRect GetRectangle() override;
-	void LoadTexture(std::string imgDirectory);
 	
 };
 
