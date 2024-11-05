@@ -1,7 +1,6 @@
 #ifndef PARTICLE_H__
 #define PARTICLE_H__
 #include <SFML/Graphics.hpp>
-#include "Ball.h"
 
 class ParticleSystem : public sf::Drawable, public sf::Transformable
 {
