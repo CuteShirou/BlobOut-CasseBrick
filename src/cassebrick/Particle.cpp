@@ -37,10 +37,10 @@ void ParticleSystem::draw(sf::RenderTarget& target, sf::RenderStates states) con
 void ParticleSystem::resetParticle(std::size_t index)
 {
     // give a random velocity and lifetime to the particle
-    float angle = (std::rand() % 10) * 4;
-    float speed = (std::rand() % 50);
+    float angle = (std::rand() % 360) * 1;
+    float speed = (std::rand() % 35);
     m_particles[index].velocity = sf::Vector2f(std::cos(angle) * speed, std::sin(angle) * speed);
-    m_particles[index].lifetime = sf::milliseconds((std::rand() % 2000) + 500);
+    m_particles[index].lifetime = sf::milliseconds((std::rand() % 1000) + 50);
 
     // reset the position of the corresponding vertex
     m_vertices[index].position = m_emitter;
