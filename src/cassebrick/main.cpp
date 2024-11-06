@@ -12,9 +12,12 @@
 
 void init(Score& score, Window& window, Paddle* paddle, Ball* ball, std::vector<Brick>& bricks) {
   
+    int windowWidth = window.GetWidth();
+    int windowHeight = window.GetHeight();
+
     //init variable paddle and ball
-    sf::Vector2f paddlePos(350, 500);
-    sf::Vector2f ballPos(400, 400); // Position initiale de la balle
+    sf::Vector2f paddlePos (windowWidth/2 - (paddle->GetSprite().getPosition().x) / 2, windowHeight*0.95);
+    sf::Vector2f ballPos(windowWidth / 2 - (ball->GetSprite().getPosition().x) / 2, windowHeight * 0.8); // Position initiale de la balle
     sf::Vector2f ballDir(0.0f, -1.0f); // Direction initiale de la balle
     float ballSpeed = 5.0f; // Vitesse de la balle
 
@@ -27,24 +30,32 @@ void init(Score& score, Window& window, Paddle* paddle, Ball* ball, std::vector<
 
     //setup bricks
     int rows = 5; // Nombre de lignes de briques
-    int cols = 1; // Nombre de colonnes de briques
-    float startX = 10; // Position de départ en X
-    float startY = 80; // Position de départ en Y
-    sf::Vector2<float> BrickScale(0.5, 0.5); // Taille de chaque brique
-    float spacingX = 79; // Espace entre les briques en X
-    float spacingY = 35; // Espace entre les briques en Y
-
+    int cols = 10; // Nombre de colonnes de briques
     window.SetBackground("../../../src/cassebrick/Wallpaper.png");
   
-    //creat and place all the bricks
-    int it = 0;
+    float spacingX = windowWidth * 0.015;
+    float spacingY = windowHeight * 0.007;
+
+    // Base dimensions for the brick image
+    float baseBrickWidth = 128.0f;
+    float baseBrickHeight = 64.0f;
+
+    // Available width and height for brick placement
+    float availableWidth = windowWidth - ((cols + 1) * spacingX);
+    float availableHeight = windowHeight * 0.8 / 2 - ((rows + 1) * spacingY);
+
+    // Calculate scaling factors based on the available space and base brick size
+    float scaleX = (availableWidth / (cols * baseBrickWidth));
+    float scaleY = (availableHeight / (rows * baseBrickHeight));
+
+    // Create and place bricks
+    bricks.clear();
     for (int row = 0; row < rows; ++row) {
         for (int col = 0; col < cols; ++col) {
-            float x = startX + col * (BrickScale.x + spacingX);
-            float y = startY + row * (BrickScale.y + spacingY);
-            bricks.emplace_back(sf::Vector2<float>(x, y), BrickScale);
-            bricks[it].SetScale(BrickScale.x, BrickScale.y);
-            ++it;
+            float x = spacingX + col * (baseBrickWidth * scaleX + spacingX);
+            float y = windowHeight * 0.1 + spacingY + row * (baseBrickHeight * scaleY + spacingY);
+            bricks.emplace_back(sf::Vector2f(x, y), sf::Vector2f(baseBrickWidth, baseBrickHeight));
+            bricks.back().SetScale(scaleX, scaleY);  // Apply the scaling
         }
     }
 }
