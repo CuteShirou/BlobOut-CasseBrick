@@ -120,6 +120,7 @@ int main()
             {
                 window.MoveWindow();
                 ball.IncreaseSpeed(1.03);
+                score.SetMultiplier(1.f);
             }
 
             window.Update(500, 15);
@@ -133,6 +134,7 @@ int main()
                     it = bricks.erase(it);  // Supprimer la brique et obtenir un nouvel itérateur valide
                     score.Increase(100);  // Augmenter le score
                     window.ShakeWindow();
+                    score.AddMultiplier(1.1);
                 }
                 else {
                     ++it;
