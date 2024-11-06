@@ -22,6 +22,15 @@ int main()
         return -1;
     }
     
+    sf::Text fpsText;
+    sf::Font font;
+    font.loadFromFile("../../../src/cassebrick/CyborgPunk.ttf");
+    fpsText.setFont(font);
+    fpsText.setCharacterSize(12);
+    fpsText.setFillColor(sf::Color(255, 255, 255, 100));
+    fpsText.setPosition(700, 5);
+    fpsText.setString(sf::String("FPS : 0"));
+
     Score score;
 
     auto fpsTime = std::chrono::system_clock::now();
@@ -77,7 +86,6 @@ int main()
             if (currentTime - fpsTime > std::chrono::seconds(1)) {
                 fpsTime = currentTime;
                 system("CLS");
-                std::cout << "FPS: " << fps << std::endl;
             }
 
             menu->RunMenu(window);
@@ -131,18 +139,23 @@ int main()
                 }
             }
 
-
-            window.DrawScore(score.GetScoreText());
-
             auto currentTime = std::chrono::system_clock::now();
             fps = 1.0f / clock.getElapsedTime().asSeconds();
             if (currentTime - fpsTime > std::chrono::seconds(1)) {
                 fpsTime = currentTime;
-                system("CLS");
-                std::cout << "FPS: " << fps << std::endl;
+                fpsText.setString(sf::String("FPS : " + std::to_string((int)fps)));
+
             }
 
+            window.DrawScore(score.GetScoreText());
+            window.DrawScore(fpsText);
+
             window.Display();
+        }
+        else if (gameState == 2) {
+            // Faire 5 rectangles pour les 5 meilleurs scores (display only)
+            std::cout << "Score : ";
+            break;
         }
         
     }
