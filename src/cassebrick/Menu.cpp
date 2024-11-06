@@ -103,13 +103,14 @@ void Menu::LoopEvents(Window& window) {
     }
 }
 
-void Menu::DrawAll(Window& window) {
+void Menu::DrawAll(Window& window, sf::Text fpsText) {
     window.GetWindow().clear();
     window.GetWindow().draw(*bg);
     for (auto t : texts) {
         window.GetWindow().draw(t);
     }
     window.GetWindow().display();
+    window.DrawScore(fpsText);
 }
 
 int Menu::GetState()
@@ -117,7 +118,12 @@ int Menu::GetState()
     return gameState;
 }
 
-void Menu::RunMenu(Window& window) {
+void Menu::SetState(int state)
+{
+    gameState = state;
+}
+
+void Menu::RunMenu(Window& window, sf::Text fpsText) {
     LoopEvents(window);
-    DrawAll(window);
+    DrawAll(window, fpsText);
 }

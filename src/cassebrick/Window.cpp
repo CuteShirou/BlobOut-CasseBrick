@@ -19,7 +19,7 @@ void Window::CreateWindow(int width, int height)
 
 	desktopWidth = sf::VideoMode::getDesktopMode().width;
 	desktopheight = sf::VideoMode::getDesktopMode().height;
-	window.create(sf::VideoMode(width, height), "*test*");
+	window.create(sf::VideoMode(width, height), "Blob Out");
 	window.setVerticalSyncEnabled(true);
 	pos = { (desktopWidth/2) - ((int)window.getSize().x / 2) , (desktopheight / 2) - ((int)window.getSize().y / 2) };
 }

@@ -25,11 +25,12 @@ class Menu {
 protected:
     void SetValues();
     void LoopEvents(Window& window);
-    void DrawAll(Window& window);
+    void DrawAll(Window& window, sf::Text fpsText);
 
 public:
     Menu();
     ~Menu();
-    void RunMenu(Window& window);
+    void RunMenu(Window& window, sf::Text fpsText);
     int GetState();
+    void SetState(int state);
 };
