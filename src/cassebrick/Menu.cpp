@@ -28,7 +28,6 @@ void Menu::SetValues() {
 
     pos_mouse = { 0,0 };
     mouse_coord = { 0, 0 };
-
     options = { "Blob Out", "Play", "Scores", "Options", "Quit" };
     texts.resize(5);
     coords = { {365,35},{378,165},{360,235},{350,307},{378,379} };
