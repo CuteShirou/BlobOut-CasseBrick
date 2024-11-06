@@ -31,6 +31,7 @@ public:
 	void MoveWindow();
 	void Update(int duration, int intensity);
 	bool start = false;
+	void BackgroundChange();
 
 protected:
 	sf::RenderWindow window;
@@ -46,6 +47,12 @@ protected:
 	std::vector<sf::Vector2i> windowRandomPos;
 	int desktopWidth;
 	int desktopheight;
+	const std::vector<std::string> backgroundPaths = {
+		"../../../src/cassebrick/Wallpaper.png",
+		"../../../src/cassebrick/Wallpaper2.png",
+		"../../../src/cassebrick/Wallpaper3.png",
+		"../../../src/cassebrick/Wallpaper4.png"
+	};
 };
 
 

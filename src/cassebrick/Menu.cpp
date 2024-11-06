@@ -28,10 +28,9 @@ void Menu::SetValues() {
 
     pos_mouse = { 0,0 };
     mouse_coord = { 0, 0 };
-
-    options = { "Blob Out", "Play", "Options", "About", "Quit" };
+    options = { "Blob Out", "Play", "Scores", "Options", "Quit" };
     texts.resize(5);
-    coords = { {365,35},{378,165},{350,235},{363,307},{378,379} };
+    coords = { {365,35},{378,165},{360,235},{350,307},{378,379} };
     sizes = { 15,20,20,20,20 };
 
     for (std::size_t i{}; i < texts.size(); ++i) {
@@ -84,13 +83,18 @@ void Menu::LoopEvents(Window& window) {
             if (pos == 4) {
                 window.GetWindow().close();
             }
-            std::cout << options[pos] << '\n';
             if (pos == 1) {
                 gameState = 1;
             }
+            if (pos == 2) {
+                gameState = 2;
+            }
+            if (pos == 3) {
+                gameState == 3;
+            }
         }
 
-        if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+        else if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
             if (winclose->getGlobalBounds().contains(mouse_coord)) {
                 //std::cout << "Close the window!" << '\n';
                 window.GetWindow().close();

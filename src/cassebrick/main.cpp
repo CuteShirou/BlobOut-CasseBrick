@@ -8,11 +8,10 @@
 #include "Score.h"
 #include "Particle.h"
 #include "Menu.h"
+#include "Sound.h"
 
-void init(Score& score, Window& window, Paddle* paddle, Ball* ball, std::vector<Brick>& bricks) {
-
-    window.CreateWindow(800, 600);
-
+void init(Score& score, Paddle* paddle, Ball* ball, std::vector<Brick>& bricks) {
+  
     //init variable paddle and ball
     sf::Vector2f paddlePos(350, 500);
     sf::Vector2f ballPos(400, 400); // Position initiale de la balle
@@ -31,12 +30,12 @@ void init(Score& score, Window& window, Paddle* paddle, Ball* ball, std::vector<
     int cols = 10; // Nombre de colonnes de briques
     float startX = 10; // Position de départ en X
     float startY = 80; // Position de départ en Y
-    float endX = 10; // Position de fin en X
-    float endY = 80; // Position de fin en Y
     sf::Vector2<float> BrickScale(0.5, 0.5); // Taille de chaque brique
     float spacingX = 79; // Espace entre les briques en X
     float spacingY = 35; // Espace entre les briques en Y
 
+  window.SetBackground("../../../src/cassebrick/Wallpaper.png");
+  
     //creat and place all the bricks
     int it = 0;
     for (int row = 0; row < rows; ++row) {
@@ -66,6 +65,9 @@ bool gameloop(Window& window, Paddle* paddle, Ball* ball, ParticleSystem& partic
 
     if (ball->CollisionPaddle(*paddle)) {
         window.MoveWindow();
+        ball.IncreaseSpeed(1.03);
+        score.SetMultiplier(1.f);
+        window.BackgroundChange();
     }
 
 
@@ -80,7 +82,7 @@ bool gameloop(Window& window, Paddle* paddle, Ball* ball, ParticleSystem& partic
             score.Increase(100);
 
             window.ShakeWindow();
-
+          
             if (bricks.size() == 0) {
                 return false;
             }
@@ -96,7 +98,9 @@ bool gameloop(Window& window, Paddle* paddle, Ball* ball, ParticleSystem& partic
     window.Draw(paddle->GetSprite());
     window.DrawScore(score.GetScoreText());
     window.Update(500, 15);
-
+    window.DrawScore(score.GetScoreText());
+    window.DrawScore(fpsText);
+  
     window.Display();
 
     return true;
@@ -104,6 +108,7 @@ bool gameloop(Window& window, Paddle* paddle, Ball* ball, ParticleSystem& partic
 
 int main()
 {
+    Menu* menu = new Menu();
     Score score;
     Window window;
     Paddle* paddle = new Paddle(sf::Vector2(0.0f, 0.0f));
@@ -112,23 +117,54 @@ int main()
     std::vector<Brick> bricks;
     sf::Clock clock;
     sf::Clock fpsClock;
+    sf::Text fpsText;
+    sf::Font font;
+    font.loadFromFile("../../../src/cassebrick/CyborgPunk.ttf");
+    fpsText.setFont(font);
+    fpsText.setCharacterSize(12);
+    fpsText.setFillColor(sf::Color(255, 255, 255, 100));
+    fpsText.setPosition(700, 5);
+    fpsText.setString(sf::String("FPS : 0"));
+    Sound collisionSound("../../../src/cassebrick/Augh.wav");
+    Sound BackgroundMusic("../../../src/cassebrick/BackgroundMusic.wav");
+    collisionSound.SetVolume(60);
+    BackgroundMusic.SetVolume(100);
 
+    window.CreateWindow(800, 600);
+  
     auto fpsTime = std::chrono::system_clock::now();
     float fps;
 
-    init(score, window, paddle, ball, bricks);
+    init(score, paddle, ball, bricks);
 
-    while (gameloop(window, paddle, ball, particles, clock, bricks, score)) {
+    BackgroundMusic.PlaySound();
+
+    // Boucle principale
+    while (window.GetWindow().isOpen()) {
+        // Boucle du menu
+      
+        // GetFPS
         auto currentTime = std::chrono::system_clock::now();
-
         fps = 1.0f / clock.getElapsedTime().asSeconds();
         if (currentTime - fpsTime > std::chrono::seconds(1)) {
             fpsTime = currentTime;
-            system("CLS");
-            std::cout << "FPS: " << fps << std::endl;
-            std::cout << bricks.size() << std::endl;
+        }
+      
+        if (gameState == 0) {
+            menu->RunMenu(window);
+            gameState = menu->GetState();
         }
 
+        // Boucle de jeu
+        else if (gameState == 1) {
+            gameloop(window, paddle, ball, particles, clock, bricks, score)
+        }
+        else if (gameState == 2) {
+            // Faire 5 rectangles pour les 5 meilleurs scores (display only)
+            std::cout << "Score : ";
+            break;
+        }
+        
     }
 
 #ifdef _DEBUG

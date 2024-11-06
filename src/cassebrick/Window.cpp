@@ -66,29 +66,6 @@ void Window::PollEvents(Paddle* sprite) {
 				// déclenche le move de la ball
 				start = true;
 			}
-
-			// Touche A
-			if (event.key.scancode == sf::Keyboard::Scan::A) {
-				// Si le paddle est dans la fen�tre, il peut bouger
-				if (sprite->GetSprite().getPosition().x > 0) {
-					sprite->MovePaddle(sf::Vector2f(-8, 0));
-					// S'il depasse la fenetre de la sa vitesse, le teleporte a la bordure 
-					if (sprite->GetPos().x <= 0) {
-						sprite->SetPos(sf::Vector2f(0, 500));
-					}
-				}
-			}
-			// Touche D
-			else if (event.key.scancode == sf::Keyboard::Scan::D) {
-				// Si le paddle est dans la fen�tre, il peut bouger
-				if (window.getSize().x > sprite->GetPos().x + sprite->GetSprite().getGlobalBounds().width) {
-					sprite->MovePaddle(sf::Vector2f(10, 0));
-					// S'il d�passe la fen�tre d� � sa vitesse, le t�l�porte � la bordure 
-					if (sprite->GetPos().x + sprite->GetSprite().getGlobalBounds().width >= window.getSize().x) {
-						sprite->SetPos(sf::Vector2f(window.getSize().x - sprite->GetSprite().getGlobalBounds().width, 500));
-					}
-				}
-			}
 		}
 		// Reactiver le controle par la souris apres 200 ms sans appui de touche
 		if (std::chrono::duration_cast<std::chrono::milliseconds>(now - lastKeyPressTime).count() > 200) {
@@ -179,5 +156,12 @@ void Window::Update(int duration, int intensity)
 			window.setPosition(pos);
 			isShaking = false; // Arrête le tremblement
 		}
+	}
+}
+
+void Window::BackgroundChange() {
+	int index = std::rand() % backgroundPaths.size();
+	if (!SetBackground(backgroundPaths[index])) {
+		std::cerr << "Erreur lors du chargement du fond d'écran aléatoire." << std::endl;
 	}
 }
