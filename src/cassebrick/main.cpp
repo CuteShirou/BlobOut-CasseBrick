@@ -7,6 +7,7 @@
 #include "Ball.h"
 #include "Score.h"
 #include "Particle.h"
+#include "Sound.h"
 #include "Menu.h"
 
 int main()
@@ -32,6 +33,11 @@ int main()
     fpsText.setString(sf::String("FPS : 0"));
 
     Score score;
+
+	Sound collisionSound("../../../src/cassebrick/Augh.wav");
+	Sound BackgroundMusic("../../../src/cassebrick/BackgroundMusic.wav");
+	collisionSound.SetVolume(60);
+	BackgroundMusic.SetVolume(100);
 
     auto fpsTime = std::chrono::system_clock::now();
     float fps;
@@ -77,6 +83,8 @@ int main()
 
     sf::Clock clock;
 
+    BackgroundMusic.PlaySound();
+
     // Boucle principale
     while (window.GetWindow().isOpen()) {
         // Boucle du menu
@@ -121,6 +129,7 @@ int main()
                 window.MoveWindow();
                 ball.IncreaseSpeed(1.03);
                 score.SetMultiplier(1.f);
+                window.BackgroundChange();
             }
 
             window.Update(500, 15);
@@ -135,6 +144,7 @@ int main()
                     score.Increase(100);  // Augmenter le score
                     window.ShakeWindow();
                     score.AddMultiplier(1.1);
+                    collisionSound.PlaySound();
                 }
                 else {
                     ++it;

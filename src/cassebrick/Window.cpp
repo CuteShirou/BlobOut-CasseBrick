@@ -157,3 +157,10 @@ void Window::Update(int duration, int intensity)
 		}
 	}
 }
+
+void Window::BackgroundChange() {
+	int index = std::rand() % backgroundPaths.size();
+	if (!SetBackground(backgroundPaths[index])) {
+		std::cerr << "Erreur lors du chargement du fond d'écran aléatoire." << std::endl;
+	}
+}
