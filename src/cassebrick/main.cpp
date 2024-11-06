@@ -7,6 +7,7 @@
 #include "Ball.h"
 #include "Score.h"
 #include "Particle.h"
+#include "Sound.h"
 
 int main()
 {
@@ -18,6 +19,8 @@ int main()
     }
     
     Score score;
+
+	Sound collisionSound("../../../src/cassebrick/Augh.wav");
 
     auto fpsTime = std::chrono::system_clock::now();
     float fps;
@@ -87,7 +90,10 @@ int main()
         paddle->SetScale(1, 1.2);
         window.Draw(paddle->GetSprite());
 
-        ball.CollisionPaddle(*paddle);
+		if (ball.CollisionPaddle(*paddle)) {
+			/*window.MoveWindow();*/
+            window.BackgroundChange();
+		}
 
         window.Update(500, 15);  
 
@@ -96,16 +102,17 @@ int main()
             if (ball.OnCollision(*it)) {
                 it->Destroy();  // Détruire la brique
                 it = bricks.erase(it);  // Supprimer la brique et obtenir un nouvel itérateur valide
-				        score.Increase(100);  // Augmenter le score
-				        std::cout << "Score: " << score.GetScore() << std::endl;
+                score.Increase(100);  // Augmenter le score
+                std::cout << "Score: " << score.GetScore() << std::endl;
                 window.ShakeWindow();
-                window.MoveWindow();
+                /*window.MoveWindow();*/
+                collisionSound.playSound();
             }
             it->SpriteDraw("Romain Giovannini le GOAT");
             window.Draw(it->GetSprite());
             ++it;
         }
-
+        
         window.DrawScore(score.GetScoreText());
       
         auto currentTime = std::chrono::system_clock::now();
