@@ -7,119 +7,136 @@
 #include "Ball.h"
 #include "Score.h"
 #include "Particle.h"
+#include "Menu.h"
 
-int main()
-{
-    Window window;
+void init(Score& score, Window& window, Paddle* paddle, Ball* ball, std::vector<Brick>& bricks) {
+
     window.CreateWindow(800, 600);
 
-    if (!window.SetBackground("../../../src/cassebrick/Wallpaper.png")) {
-        return -1;
-    }
-    
-    Score score;
-
-    auto fpsTime = std::chrono::system_clock::now();
-    float fps;
-
+    //init variable paddle and ball
     sf::Vector2f paddlePos(350, 500);
-    Paddle* paddle = new Paddle(sf::Vector2(350.f,500.f));
-
-    // Initialisation de la balle
     sf::Vector2f ballPos(400, 400); // Position initiale de la balle
     sf::Vector2f ballDir(0.0f, -1.0f); // Direction initiale de la balle
     float ballSpeed = 5.0f; // Vitesse de la balle
-    Ball ball(ballPos, ballDir, ballSpeed); // Création de la balle
 
-    // Particules
-    ParticleSystem particles(5000);
+    //init paddle and ball
+    paddle->SetPos(paddlePos);
+    paddle->SetScale(1, 1.2);
+    ball->SetPos(ballPos);
+    ball->setDir(ballDir);
+    ball->setSpeed(ballSpeed);
 
-    // Vecteur pour stocker les briques
-    std::vector<Brick> bricks;
-
-    // Dimensions de la brique et configuration du motif
-    sf::Vector2<float> BrickScale(0.5, 0.5); // Taille de chaque brique
+    //setup bricks
     int rows = 5; // Nombre de lignes de briques
-    int cols = 13; // Nombre de colonnes de briques
+    int cols = 10; // Nombre de colonnes de briques
     float startX = 10; // Position de départ en X
     float startY = 80; // Position de départ en Y
+    sf::Vector2<float> BrickScale(0.5, 0.5); // Taille de chaque brique
     float spacingX = 79; // Espace entre les briques en X
     float spacingY = 35; // Espace entre les briques en Y
 
-    // Création du motif de briques
+    //creat and place all the bricks
+    int it = 0;
     for (int row = 0; row < rows; ++row) {
         for (int col = 0; col < cols; ++col) {
             float x = startX + col * (BrickScale.x + spacingX);
             float y = startY + row * (BrickScale.y + spacingY);
             bricks.emplace_back(sf::Vector2<float>(x, y), BrickScale);
-        }
-    }
-
-    for (auto it = bricks.begin(); it != bricks.end(); ) {
-            it->SetScale(BrickScale.x, BrickScale.y);
-            it->SetPos(it->GetPos());
-            ++it;  // Avancer l'itérateur seulement si aucune suppression
-        }
-
-    sf::Clock clock;
-
-    // Boucle principale
-    while (true) {
-        window.Clear();
-        window.PollEvents(paddle);
-
-        // Mise à jour et dessin de la balle
-        ball.Move(window); // Déplace la balle en fonction des bordures
-        ball.SpriteDraw("../../../src/cassebrick/ball.png"); // Chemin de texture
-        window.Draw(ball.GetSprite()); // Dessin de la balle
-
-        // Mise à jour des particules
-        sf::Vector2i ballPosInt = static_cast <sf::Vector2i>(ball.GetPos());
-        ballPosInt = ballPosInt + sf::Vector2i(ball.GetRectangle().height / 2, ball.GetRectangle().width / 2);
-        particles.SetEmitter(window.GetWindow().mapPixelToCoords(ballPosInt));
-
-        sf::Time elapsed = clock.restart();
-        particles.Update(elapsed);
-        window.DrawParticle(particles);
-
-        // Mise à jour et dessin du paddle
-        paddle->SpriteDraw("../../../src/cassebrick/paddle.png");
-        paddle->SetScale(1, 1.2);
-        window.Draw(paddle->GetSprite());
-
-        if (ball.CollisionPaddle(*paddle)) 
-        {
-        }
-
-        window.Update(500, 15);  
-
-        // Dessiner chaque brique
-        for (auto it = bricks.begin(); it != bricks.end(); ) {
-            if (ball.OnCollision(*it)) {
-                it->Destroy();  // Détruire la brique
-                it = bricks.erase(it);  // Supprimer la brique et obtenir un nouvel itérateur valide
-				        score.Increase(100);  // Augmenter le score
-				        std::cout << "Score: " << score.GetScore() << std::endl;
-                window.ShakeWindow();
-                window.MoveWindow();
-            }
-            it->SpriteDraw("Romain Giovannini le GOAT");
-            window.Draw(it->GetSprite());
+            bricks[it].SetScale(BrickScale.x, BrickScale.y);
             ++it;
         }
+    }
+}
 
-        window.DrawScore(score.GetScoreText());
-      
+bool gameloop(Window& window, Paddle* paddle, Ball* ball, ParticleSystem& particles, sf::Clock& clock, std::vector<Brick>& bricks, Score& score){
+
+    window.PollEvents(paddle);
+
+    sf::Vector2i ballPosInt = static_cast <sf::Vector2i>(ball->GetPos());
+    ballPosInt = ballPosInt + sf::Vector2i(ball->GetRectangle().height / 2, ball->GetRectangle().width / 2);
+    particles.SetEmitter(window.GetWindow().mapPixelToCoords(ballPosInt));
+
+    sf::Time elapsed = clock.restart();
+    particles.Update(elapsed);
+
+    ball->Move(window);
+
+    if (ball->CollisionPaddle(*paddle)) {
+        window.MoveWindow();
+    }
+
+
+    for (auto it = bricks.begin(); it != bricks.end(); ) {
+        it->SpriteDraw("Romain Giovannini le GOAT");
+        window.Draw(it->GetSprite());
+
+        if (ball->OnCollision(*it)) {
+            it->Destroy();
+            it = bricks.erase(it);
+
+            score.Increase(100);
+
+            window.ShakeWindow();
+
+            if (bricks.size() == 0) {
+                return false;
+            }
+        }
+        else {
+            ++it;
+        }
+        return true;
+    }
+
+
+    window.DrawParticle(particles);
+    ball->SpriteDraw("../../../src/cassebrick/ball.png");
+    paddle->SpriteDraw("../../../src/cassebrick/paddle.png");
+    window.Draw(ball->GetSprite());
+    window.Draw(paddle->GetSprite());
+    window.DrawScore(score.GetScoreText());
+    window.Update(500, 15);
+
+}
+
+void game(Window& window, Paddle* paddle, Ball* ball, ParticleSystem& particles, sf::Clock& clock, std::vector<Brick>& bricks, Score& score) {
+
+    init(score, window, paddle, ball, bricks);
+    gameloop(window, paddle, ball, particles, clock, bricks, score);
+}
+
+int main()
+{
+    Score score;
+    Window window;
+    Paddle* paddle = new Paddle(sf::Vector2(0.0f, 0.0f));
+    Ball* ball = new Ball(sf::Vector2(0.0f, 0.0f), sf::Vector2(0.0f, 0.0f), 0);
+    ParticleSystem particles(5000);
+    std::vector<Brick> bricks;
+    sf::Clock clock;
+
+   
+    while (true) {
+
+        
+
+        auto fpsTime = std::chrono::system_clock::now();
+        float fps;
         auto currentTime = std::chrono::system_clock::now();
+
+        window.Clear();
+        game(window, paddle, ball, particles, clock, bricks, score);
+        window.Display();
+
         fps = 1.0f / clock.getElapsedTime().asSeconds();
         if (currentTime - fpsTime > std::chrono::seconds(1)) {
             fpsTime = currentTime;
             system("CLS");
             std::cout << "FPS: " << fps << std::endl;
+            std::cout << bricks.size() << std::endl;
         }
-
-        window.Display();
     }
+    
 
 #ifdef _DEBUG
     _CrtDumpMemoryLeaks();

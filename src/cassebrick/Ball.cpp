@@ -1,8 +1,8 @@
+#include <math.h>
+#include <iostream>
 #include "pch.h"
 #include "Ball.h"
 #include "Window.h"
-#include <math.h>
-#include <iostream>
 
 Ball::Ball(sf::Vector2<float> pos_, sf::Vector2<float> dir_, float speed_) : pos(pos_), dir(dir_), speed(speed_)
 {
@@ -111,9 +111,19 @@ sf::Vector2<float> Ball::GetPos()
     return pos;
 }
 
-void Ball::SetPos(sf::Vector2<float> pos)
+void Ball::SetPos(sf::Vector2<float> pos_)
 {
-    sprite.setPosition(pos);
+    pos = pos_;
+}
+
+void Ball::setDir(sf::Vector2<float> dir_)
+{
+    dir = dir_;
+}
+
+void Ball::setSpeed(float speed_)
+{
+    speed = speed_;
 }
 
 void Ball::SetScale(float x, float y)
