@@ -21,6 +21,9 @@ int main()
     Score score;
 
 	Sound collisionSound("../../../src/cassebrick/Augh.wav");
+	Sound BackgroundMusic("../../../src/cassebrick/BackgroundMusic.wav");
+	collisionSound.SetVolume(60);
+	BackgroundMusic.SetVolume(100);
 
     auto fpsTime = std::chrono::system_clock::now();
     float fps;
@@ -66,6 +69,8 @@ int main()
 
     sf::Clock clock;
 
+    BackgroundMusic.PlaySound();
+
     // Boucle principale
     while (true) {
         window.Clear();
@@ -106,7 +111,7 @@ int main()
                 std::cout << "Score: " << score.GetScore() << std::endl;
                 window.ShakeWindow();
                 /*window.MoveWindow();*/
-                collisionSound.playSound();
+                collisionSound.PlaySound();
             }
             it->SpriteDraw("Romain Giovannini le GOAT");
             window.Draw(it->GetSprite());

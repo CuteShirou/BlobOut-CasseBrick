@@ -7,11 +7,14 @@
 class Sound {
 public:
 	Sound(const std::string& filename);
-	void playSound();
+	void PlaySound();
+	void SetVolume(float Volume);
+	void AddSound(const sf::SoundBuffer& buffer);
 
 protected:
 	sf::Sound sound;
 	sf::SoundBuffer buffer;
+	std::vector<sf::Sound> sounds;
 };
 
 #endif
