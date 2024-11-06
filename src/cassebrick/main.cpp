@@ -121,9 +121,10 @@ bool gameloop(Window& window, Paddle* paddle, Ball* ball, ParticleSystem& partic
 
 int main()
 {
-    Menu* menu = new Menu();
-    Score score;
     Window window;
+    window.CreateWindow(800, 600);
+    Score score;
+    Menu* menu = new Menu(window);
     Paddle* paddle = new Paddle(sf::Vector2(0.0f, 0.0f));
     Ball* ball = new Ball(sf::Vector2(0.0f, 0.0f), sf::Vector2(0.0f, 0.0f), 0);
     ParticleSystem particles(5000);
@@ -136,7 +137,6 @@ int main()
     fpsText.setFont(font);
     fpsText.setCharacterSize(12);
     fpsText.setFillColor(sf::Color(255, 255, 255, 100));
-    fpsText.setPosition(700, 5);
     fpsText.setString(sf::String("FPS : 0"));
     Sound collisionSound("../../../src/cassebrick/Augh.wav");
     Sound BackgroundMusic("../../../src/cassebrick/BackgroundMusic.wav");
@@ -144,7 +144,6 @@ int main()
     BackgroundMusic.SetVolume(100);
     int gameState = 0;
 
-    window.CreateWindow(800, 600);
   
     auto fpsTime = std::chrono::system_clock::now();
     float fps;
@@ -162,6 +161,7 @@ int main()
         if (currentTime - fpsTime > std::chrono::seconds(1)) {
             fpsTime = currentTime;
             fpsText.setString(sf::String("FPS : " + std::to_string((int)fps)));
+            fpsText.setPosition(window.GetWidth() - 100, 5);
         }
       
         if (gameState == 0) {
@@ -185,6 +185,12 @@ int main()
             // Faire 5 rectangles pour les 5 meilleurs scores (display only)
             std::cout << "Score : ";
             break;
+        }
+        else if (gameState == 3) {
+
+            if (gameState == 1) {
+                menu->SetValues(window);
+            }
         }
         
     }

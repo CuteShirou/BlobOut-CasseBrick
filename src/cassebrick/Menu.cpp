@@ -1,13 +1,13 @@
 #include "pch.h"
 #include "Menu.h"
 
-Menu::Menu() {
+Menu::Menu(Window& window) {
     winclose = new sf::RectangleShape();
     font = new sf::Font();
     image = new sf::Texture();
     bg = new sf::Sprite();
 
-    SetValues();
+    SetValues(window);
 }
 
 Menu::~Menu() {
@@ -17,36 +17,61 @@ Menu::~Menu() {
     delete bg;
 }
 
-void Menu::SetValues() {
-
+void Menu::SetValues(Window& window) {
     pos = 0;
     pressed = theselect = false;
+    int windowWidth = window.GetWidth();
+    int windowHeight = window.GetHeight();
+
     font->loadFromFile("../../../src/cassebrick/CyborgPunk.ttf");
     image->loadFromFile("../../../src/cassebrick/Background_Menu.png");
-
     bg->setTexture(*image);
 
-    pos_mouse = { 0,0 };
-    mouse_coord = { 0, 0 };
-    options = { "Blob Out", "Play", "Scores", "Options", "Quit" };
-    texts.resize(5);
-    coords = { {365,35},{378,165},{360,235},{350,307},{378,379} };
-    sizes = { 15,20,20,20,20 };
+    // Scale background sprite to fit the window
+    float bgScaleX = (windowWidth) / 800.0f;
+    float bgScaleY = (windowHeight) / 600.0f;
+    std::cout << bgScaleX << " : " << bgScaleY << std::endl;
+    std::cout << windowWidth << " : " << windowHeight << std::endl;
+    bg->setScale(bgScaleX, bgScaleY);
 
-    for (std::size_t i{}; i < texts.size(); ++i) {
+
+    options = { "Blob Out", "Play", "Scores", "Options", "Quit" };
+    texts.resize(options.size());
+
+    // Set positions as percentages for dynamic resizing
+    std::vector<sf::Vector2f> coords = {
+        {windowWidth * 0.45625f, windowHeight * 0.0583f},  // For "Blob Out"
+        {windowWidth * 0.4725f, windowHeight * 0.275f},    // For "Play"
+        {windowWidth * 0.45f, windowHeight * 0.3916f},     // For "Scores"
+        {windowWidth * 0.4375f, windowHeight * 0.5116f},   // For "Options"
+        {windowWidth * 0.4725f, windowHeight * 0.6316f}    // For "Quit"
+    };
+
+    // Set character sizes based on window height
+    std::vector<int> sizes = {
+        static_cast<int>(windowHeight * 0.025),  // "Blob Out"
+        static_cast<int>(windowHeight * 0.033),  // Other options
+        static_cast<int>(windowHeight * 0.033),
+        static_cast<int>(windowHeight * 0.033),
+        static_cast<int>(windowHeight * 0.033)
+    };
+
+    for (std::size_t i = 0; i < texts.size(); ++i) {
         texts[i].setFont(*font);
         texts[i].setString(options[i]);
         texts[i].setCharacterSize(sizes[i]);
         texts[i].setOutlineColor(sf::Color::Black);
         texts[i].setPosition(coords[i]);
     }
+
+    // Highlight "Play" by default
     texts[1].setOutlineThickness(4);
     pos = 1;
 
-    winclose->setSize(sf::Vector2f(38, 38));
-    winclose->setPosition(723, 20);
+    // Scale and position the close button
+    winclose->setSize(sf::Vector2f(windowWidth * 0.0475f, windowHeight * 0.0633f));
+    winclose->setPosition(windowWidth * 0.90375f, windowHeight * 0.0333f);
     winclose->setFillColor(sf::Color::Transparent);
-
 }
 
 void Menu::LoopEvents(Window& window) {

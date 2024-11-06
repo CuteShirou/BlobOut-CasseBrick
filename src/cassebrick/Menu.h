@@ -23,13 +23,13 @@ class Menu {
     std::vector<std::size_t> sizes;
 
 protected:
-    void SetValues();
     void LoopEvents(Window& window);
     void DrawAll(Window& window, sf::Text fpsText);
 
 public:
-    Menu();
+    Menu(Window& window);
     ~Menu();
+    void SetValues(Window& window);
     void RunMenu(Window& window, sf::Text fpsText);
     int GetState();
     void SetState(int state);
