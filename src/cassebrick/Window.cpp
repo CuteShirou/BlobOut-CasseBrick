@@ -180,3 +180,15 @@ void Window::Update(int duration, int intensity)
 		}
 	}
 }
+
+void Window::BackgroundChange() {
+	if (std::rand() % 2 == 0) {  // Condition de 50%
+		int index = std::rand() % backgroundPaths.size();
+		if (!SetBackground(backgroundPaths[index])) {
+			std::cerr << "Erreur lors du chargement du fond d'écran aléatoire." << std::endl;
+		}
+	}
+	else {
+		std::cout << "Pas de changement de fond d'écran cette fois-ci (50% de probabilité)." << std::endl;
+	}
+}
