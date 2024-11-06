@@ -31,6 +31,8 @@ void init(Score& score, Window& window, Paddle* paddle, Ball* ball, std::vector<
     int cols = 10; // Nombre de colonnes de briques
     float startX = 10; // Position de départ en X
     float startY = 80; // Position de départ en Y
+    float endX = 10; // Position de fin en X
+    float endY = 80; // Position de fin en Y
     sf::Vector2<float> BrickScale(0.5, 0.5); // Taille de chaque brique
     float spacingX = 79; // Espace entre les briques en X
     float spacingY = 35; // Espace entre les briques en Y
@@ -50,6 +52,7 @@ void init(Score& score, Window& window, Paddle* paddle, Ball* ball, std::vector<
 
 bool gameloop(Window& window, Paddle* paddle, Ball* ball, ParticleSystem& particles, sf::Clock& clock, std::vector<Brick>& bricks, Score& score){
 
+    window.Clear();
     window.PollEvents(paddle);
 
     sf::Vector2i ballPosInt = static_cast <sf::Vector2i>(ball->GetPos());
@@ -85,10 +88,7 @@ bool gameloop(Window& window, Paddle* paddle, Ball* ball, ParticleSystem& partic
         else {
             ++it;
         }
-        return true;
     }
-
-
     window.DrawParticle(particles);
     ball->SpriteDraw("../../../src/cassebrick/ball.png");
     paddle->SpriteDraw("../../../src/cassebrick/paddle.png");
@@ -97,12 +97,9 @@ bool gameloop(Window& window, Paddle* paddle, Ball* ball, ParticleSystem& partic
     window.DrawScore(score.GetScoreText());
     window.Update(500, 15);
 
-}
+    window.Display();
 
-void game(Window& window, Paddle* paddle, Ball* ball, ParticleSystem& particles, sf::Clock& clock, std::vector<Brick>& bricks, Score& score) {
-
-    init(score, window, paddle, ball, bricks);
-    gameloop(window, paddle, ball, particles, clock, bricks, score);
+    return true;
 }
 
 int main()
@@ -114,19 +111,15 @@ int main()
     ParticleSystem particles(5000);
     std::vector<Brick> bricks;
     sf::Clock clock;
+    sf::Clock fpsClock;
 
-   
-    while (true) {
+    auto fpsTime = std::chrono::system_clock::now();
+    float fps;
 
-        
+    init(score, window, paddle, ball, bricks);
 
-        auto fpsTime = std::chrono::system_clock::now();
-        float fps;
+    while (gameloop(window, paddle, ball, particles, clock, bricks, score)) {
         auto currentTime = std::chrono::system_clock::now();
-
-        window.Clear();
-        game(window, paddle, ball, particles, clock, bricks, score);
-        window.Display();
 
         fps = 1.0f / clock.getElapsedTime().asSeconds();
         if (currentTime - fpsTime > std::chrono::seconds(1)) {
@@ -135,8 +128,8 @@ int main()
             std::cout << "FPS: " << fps << std::endl;
             std::cout << bricks.size() << std::endl;
         }
+
     }
-    
 
 #ifdef _DEBUG
     _CrtDumpMemoryLeaks();
