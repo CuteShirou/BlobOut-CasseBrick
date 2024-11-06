@@ -40,6 +40,7 @@ void Ball::Move(Window& w)
     if (pos.y + bounds.height >= window.getSize().y && dir.y > 0)
     {
         w.start = false;
+        speed = 5.f;
         pos.x = 400;
         pos.y = 400;
         dir = { 0, -1 };
@@ -129,6 +130,16 @@ sf::Sprite Ball::GetSprite()
 sf::FloatRect Ball::GetRectangle()
 {
     return sprite.getGlobalBounds();
+}
+
+void Ball::IncreaseSpeed(float sp)
+{
+    speed *= sp;
+}
+
+void Ball::SetSpeed(float sp)
+{
+    speed = sp;
 }
 
 void Ball::SpriteDraw(std::string imgDirectory)

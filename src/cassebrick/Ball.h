@@ -18,6 +18,8 @@ public:
 	void SetScale(float x, float y) override;
 	sf::Sprite GetSprite() override;
 	sf::FloatRect GetRectangle() override;
+	void IncreaseSpeed(float sp);
+	void SetSpeed(float sp);
 
 protected:
 
