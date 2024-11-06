@@ -10,7 +10,7 @@
 #include "Menu.h"
 #include "Sound.h"
 
-void init(Score& score, Paddle* paddle, Ball* ball, std::vector<Brick>& bricks) {
+void init(Score& score, Window& window, Paddle* paddle, Ball* ball, std::vector<Brick>& bricks) {
   
     //init variable paddle and ball
     sf::Vector2f paddlePos(350, 500);
@@ -27,14 +27,14 @@ void init(Score& score, Paddle* paddle, Ball* ball, std::vector<Brick>& bricks) 
 
     //setup bricks
     int rows = 5; // Nombre de lignes de briques
-    int cols = 10; // Nombre de colonnes de briques
+    int cols = 1; // Nombre de colonnes de briques
     float startX = 10; // Position de départ en X
     float startY = 80; // Position de départ en Y
     sf::Vector2<float> BrickScale(0.5, 0.5); // Taille de chaque brique
     float spacingX = 79; // Espace entre les briques en X
     float spacingY = 35; // Espace entre les briques en Y
 
-  window.SetBackground("../../../src/cassebrick/Wallpaper.png");
+    window.SetBackground("../../../src/cassebrick/Wallpaper.png");
   
     //creat and place all the bricks
     int it = 0;
@@ -49,7 +49,7 @@ void init(Score& score, Paddle* paddle, Ball* ball, std::vector<Brick>& bricks) 
     }
 }
 
-bool gameloop(Window& window, Paddle* paddle, Ball* ball, ParticleSystem& particles, sf::Clock& clock, std::vector<Brick>& bricks, Score& score){
+bool gameloop(Window& window, Paddle* paddle, Ball* ball, ParticleSystem& particles, sf::Clock& clock, std::vector<Brick>& bricks, Score& score, sf::Text fpsText, Sound collisionSound){
 
     window.Clear();
     window.PollEvents(paddle);
@@ -65,7 +65,7 @@ bool gameloop(Window& window, Paddle* paddle, Ball* ball, ParticleSystem& partic
 
     if (ball->CollisionPaddle(*paddle)) {
         window.MoveWindow();
-        ball.IncreaseSpeed(1.03);
+        ball->IncreaseSpeed(1.03);
         score.SetMultiplier(1.f);
         window.BackgroundChange();
     }
@@ -80,6 +80,8 @@ bool gameloop(Window& window, Paddle* paddle, Ball* ball, ParticleSystem& partic
             it = bricks.erase(it);
 
             score.Increase(100);
+            score.AddMultiplier(1.1);
+            collisionSound.PlaySound();
 
             window.ShakeWindow();
           
@@ -100,7 +102,7 @@ bool gameloop(Window& window, Paddle* paddle, Ball* ball, ParticleSystem& partic
     window.Update(500, 15);
     window.DrawScore(score.GetScoreText());
     window.DrawScore(fpsText);
-  
+
     window.Display();
 
     return true;
@@ -129,35 +131,44 @@ int main()
     Sound BackgroundMusic("../../../src/cassebrick/BackgroundMusic.wav");
     collisionSound.SetVolume(60);
     BackgroundMusic.SetVolume(100);
+    int gameState = 0;
 
     window.CreateWindow(800, 600);
   
     auto fpsTime = std::chrono::system_clock::now();
     float fps;
 
-    init(score, paddle, ball, bricks);
+    
 
     BackgroundMusic.PlaySound();
 
     // Boucle principale
     while (window.GetWindow().isOpen()) {
-        // Boucle du menu
-      
+
         // GetFPS
         auto currentTime = std::chrono::system_clock::now();
         fps = 1.0f / clock.getElapsedTime().asSeconds();
         if (currentTime - fpsTime > std::chrono::seconds(1)) {
             fpsTime = currentTime;
+            fpsText.setString(sf::String("FPS : " + std::to_string((int)fps)));
         }
       
         if (gameState == 0) {
-            menu->RunMenu(window);
+            menu->RunMenu(window, fpsText);
             gameState = menu->GetState();
+            if (gameState == 1) {
+                init(score, window, paddle, ball, bricks);
+            }
         }
 
         // Boucle de jeu
         else if (gameState == 1) {
-            gameloop(window, paddle, ball, particles, clock, bricks, score)
+            if (!gameloop(window, paddle, ball, particles, clock, bricks, score, fpsText, collisionSound)) {
+
+                std::cout << "Ended";
+                gameState = 0;
+                menu->SetState(0);
+            }
         }
         else if (gameState == 2) {
             // Faire 5 rectangles pour les 5 meilleurs scores (display only)
