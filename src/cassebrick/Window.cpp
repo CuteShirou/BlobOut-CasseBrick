@@ -112,6 +112,11 @@ void Window::DrawParticle(ParticleSystem particle)
 	window.draw(particle);
 }
 
+void Window::DrawRect(sf::RectangleShape rect)
+{
+	window.draw(rect);
+}
+
 sf::RenderWindow& Window::GetWindow()
 {
 	return window;

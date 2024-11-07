@@ -10,6 +10,11 @@ class Menu {
     bool pressed, theselect;
 
     sf::RectangleShape* winclose;
+    sf::RectangleShape* playRec;
+    sf::RectangleShape* scoresRec;
+    sf::RectangleShape* optionsRec;
+    sf::RectangleShape* quitRec;
+
     sf::Font* font;
     sf::Texture* image;
     sf::Sprite* bg;
@@ -21,6 +26,7 @@ class Menu {
     std::vector<sf::Vector2f> coords;
     std::vector<sf::Text> texts;
     std::vector<std::size_t> sizes;
+
 
 protected:
     void LoopEvents(Window& window);
