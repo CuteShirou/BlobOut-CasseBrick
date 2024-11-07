@@ -40,7 +40,7 @@ void Ball::Move(Window& w)
     {
         w.start = false;
         speed = 5.f;
-        pos.x = (w.GetWidth() / 2) - ((pos.x) / 2);
+        pos.x = (w.GetWidth() / 2) - (bounds.width / 2);
         pos.y = w.GetHeight() * 0.8;
         dir = { 0, -1 };
     }
