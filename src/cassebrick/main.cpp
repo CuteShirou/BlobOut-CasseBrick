@@ -129,6 +129,8 @@ int main()
 {
     Window window;
     window.CreateWindow(800, 600);
+    int windowHeight = window.GetHeight();
+    int windowWidth = window.GetWidth();
     Score score;
     Menu* menu = new Menu(window);
     Paddle* paddle = new Paddle(sf::Vector2(0.0f, 0.0f));
@@ -144,12 +146,15 @@ int main()
     fpsText.setCharacterSize(12);
     fpsText.setFillColor(sf::Color(255, 255, 255, 100));
     fpsText.setString(sf::String("FPS : 0"));
+    sf::Text messcores(sf::String("Mes Scores"), font, windowHeight * 0.033);
+    std::vector<sf::Text> topScoreTexts(5, sf::Text(sf::String("0"), font, windowHeight * 0.033));
+    messcores.setPosition(310, 100);
     Sound collisionSound("../../../src/cassebrick/Augh.wav");
     Sound BackgroundMusic("../../../src/cassebrick/BackgroundMusic.wav");
     collisionSound.SetVolume(60);
     BackgroundMusic.SetVolume(100);
     int gameState = 0;
-
+    
   
     auto fpsTime = std::chrono::system_clock::now();
     float fps;
@@ -185,18 +190,43 @@ int main()
                 score.SaveScore();
             }
         }
+
         else if (gameState == 2) {
-            // Faire 5 rectangles pour les 5 meilleurs scores (display only)
-            std::vector<int> topScores = score.GetTopScores();
-            std::cout << "Les 5 meilleurs scores :\n";
-            for (int s : topScores) {
-                std::cout << s << std::endl;
+            sf::Event event;
+            window.Clear();
+            window.SetBackground("../../../src/cassebrick/Scores.png");
+            while (window.GetWindow().pollEvent(event)) {
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
+                    gameState = 0;
+                    menu->SetState(0);
+                }
             }
-			gameState = 0;
-			menu->SetState(0);
+
+            topScoreTexts[0].setString(sf::String(std::to_string(score.GetTopScores()[0])));
+            topScoreTexts[1].setString(sf::String(std::to_string(score.GetTopScores()[1])));
+            topScoreTexts[2].setString(sf::String(std::to_string(score.GetTopScores()[2])));
+            topScoreTexts[3].setString(sf::String(std::to_string(score.GetTopScores()[3])));
+            topScoreTexts[4].setString(sf::String(std::to_string(score.GetTopScores()[4])));
+
+            topScoreTexts[0].setPosition(windowWidth * 0.4375f, windowHeight * 0.3833f);
+            topScoreTexts[1].setPosition(windowWidth * 0.4375f, windowHeight * 0.5f);
+            topScoreTexts[2].setPosition(windowWidth * 0.4375f, windowHeight * 0.6167f);
+            topScoreTexts[3].setPosition(windowWidth * 0.4375f, windowHeight * 0.725f);
+            topScoreTexts[4].setPosition(windowWidth * 0.4375f, windowHeight * 0.8417f);
+
+            window.DrawScore(messcores);
+            window.DrawScore(topScoreTexts[0]);
+            window.DrawScore(topScoreTexts[1]);
+            window.DrawScore(topScoreTexts[2]);
+            window.DrawScore(topScoreTexts[3]);
+            window.DrawScore(topScoreTexts[4]);
+
+            window.Display();
         }
+
         else if (gameState == 3) {
 
+            
             if (gameState == 1) {
                 menu->SetValues(window);
             }
