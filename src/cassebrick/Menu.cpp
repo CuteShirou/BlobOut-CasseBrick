@@ -26,8 +26,8 @@ void Menu::SetValues(Window& window) {
     int windowWidth = window.GetWidth();
     int windowHeight = window.GetHeight();
 
-    font->loadFromFile("../../../src/cassebrick/CyborgPunk.ttf");
-    image->loadFromFile("../../../src/cassebrick/Background_Menu.png");
+    font->loadFromFile("Assets/CyborgPunk.ttf");
+    image->loadFromFile("Assets/Background_Menu.png");
     bg->setTexture(*image);
 
     // Scale background sprite to fit the window

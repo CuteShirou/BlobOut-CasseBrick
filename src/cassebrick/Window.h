@@ -54,10 +54,10 @@ protected:
 	sf::Clock clock;
 	std::chrono::steady_clock::time_point lastKeyPressTime = std::chrono::steady_clock::now();
 	const std::vector<std::string> backgroundPaths = {
-		"../../../src/cassebrick/Wallpaper.png",
-		"../../../src/cassebrick/Wallpaper2.png",
-		"../../../src/cassebrick/Wallpaper3.png",
-		"../../../src/cassebrick/Wallpaper4.png"
+		"Assets/Wallpaper.png",
+		"Assets/Wallpaper2.png",
+		"Assets/Wallpaper3.png",
+		"Assets/Wallpaper4.png"
 	};
 };
 

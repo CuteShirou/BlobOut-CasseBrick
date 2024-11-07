@@ -4,7 +4,7 @@
 Brick::Brick(sf::Vector2<float> posBrick, sf::Vector2<float> size) : posBrick(posBrick), m_IsDestroyed(false)
 {
 	brick.setPosition(posBrick);
-	texture.loadFromFile("../../../src/cassebrick/BRICK.png");
+	texture.loadFromFile("Assets/BRICK.png");
 }
 
 Brick::~Brick()

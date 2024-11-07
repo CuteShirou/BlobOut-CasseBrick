@@ -31,7 +31,7 @@ void init(Score& score, Window& window, Paddle* paddle, Ball* ball, std::vector<
     //setup bricks
     int rows = 6; // Nombre de lignes de briques
     int cols = 10; // Nombre de colonnes de briques
-    window.SetBackground("../../../src/cassebrick/Wallpaper.png");
+    window.SetBackground("Assets/Wallpaper.png");
   
     float spacingX = windowWidth * 0.05 / rows;
     float spacingY = windowHeight * 0.03 / cols;
@@ -111,8 +111,8 @@ bool gameloop(Window& window, Paddle* paddle, Ball* ball, ParticleSystem& partic
         }
     }
     window.DrawParticle(particles);
-    ball->SpriteDraw("../../../src/cassebrick/ball.png");
-    paddle->SpriteDraw("../../../src/cassebrick/paddle.png");
+    ball->SpriteDraw("Assets/ball.png");
+    paddle->SpriteDraw("Assets/paddle.png");
     window.Draw(ball->GetSprite());
     window.Draw(paddle->GetSprite());
     window.DrawScore(score.GetScoreText());
@@ -149,10 +149,10 @@ int main()
     sf::Text messcores(sf::String("Mes Scores"), font, windowHeight * 0.033);
     std::vector<sf::Text> topScoreTexts(5, sf::Text(sf::String("0"), font, windowHeight * 0.033));
     messcores.setPosition(310, 100);
-    Sound collisionSound("../../../src/cassebrick/Augh.wav");
-    Sound BackgroundMusic("../../../src/cassebrick/BackgroundMusic.wav");
-    collisionSound.SetVolume(60);
-    BackgroundMusic.SetVolume(100);
+    Sound collisionSound("Assets/BrickBroken.wav");
+    Sound BackgroundMusic("Assets/BackgroundMusic.wav");
+    collisionSound.SetVolume(40);
+    BackgroundMusic.SetVolume(40);
     int gameState = 0;
     
   
@@ -194,7 +194,7 @@ int main()
         else if (gameState == 2) {
             sf::Event event;
             window.Clear();
-            window.SetBackground("../../../src/cassebrick/Scores.png");
+            window.SetBackground("Assets/Scores.png");
             while (window.GetWindow().pollEvent(event)) {
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
                     gameState = 0;
