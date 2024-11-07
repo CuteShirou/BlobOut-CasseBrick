@@ -25,6 +25,7 @@ public:
 	void DrawScore(sf::Text score);
 	bool SetBackground(const std::string& filepath);
 	void DrawParticle(ParticleSystem particle);
+	void DrawRect(sf::RectangleShape rect);
 	sf::RenderWindow& GetWindow();
 	int GetWidth();
 	int GetHeight();

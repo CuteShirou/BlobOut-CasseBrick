@@ -6,7 +6,10 @@ Menu::Menu(Window& window) {
     font = new sf::Font();
     image = new sf::Texture();
     bg = new sf::Sprite();
-
+    playRec = new sf::RectangleShape();
+    scoresRec = new sf::RectangleShape();
+    optionsRec = new sf::RectangleShape();
+    quitRec = new sf::RectangleShape();
     SetValues(window);
 }
 
@@ -30,8 +33,6 @@ void Menu::SetValues(Window& window) {
     // Scale background sprite to fit the window
     float bgScaleX = (windowWidth) / 800.0f;
     float bgScaleY = (windowHeight) / 600.0f;
-    /*std::cout << bgScaleX << " : " << bgScaleY << std::endl;
-    std::cout << windowWidth << " : " << windowHeight << std::endl;*/
     bg->setScale(bgScaleX, bgScaleY);
 
 
@@ -66,12 +67,38 @@ void Menu::SetValues(Window& window) {
 
     // Highlight "Play" by default
     texts[1].setOutlineThickness(4);
-    pos = 1;
+    pos = 0;
 
     // Scale and position the close button
     winclose->setSize(sf::Vector2f(windowWidth * 0.0475f, windowHeight * 0.0633f));
     winclose->setPosition(windowWidth * 0.90375f, windowHeight * 0.0333f);
     winclose->setFillColor(sf::Color::Transparent);
+
+    std::vector<sf::Vector2f> collCoords = {
+    {windowWidth * 0.4225f, windowHeight * 0.2516f},   // For "Play" button
+    {windowWidth * 0.4225f, windowHeight * 0.3716f},   // For "Scores" button
+    {windowWidth * 0.4225f, windowHeight * 0.4916f},   // For "Options" button
+    {windowWidth * 0.4225f, windowHeight * 0.6116f}    // For "Quit" button
+    };
+
+    // Size of the colliders based on window dimensions
+    sf::Vector2f colliderSize(windowWidth * 0.1875f, windowHeight * 0.0833f);
+
+    // Colliders for menu buttons
+    playRec->setPosition(collCoords[0]);
+    scoresRec->setPosition(collCoords[1]);
+    optionsRec->setPosition(collCoords[2]);
+    quitRec->setPosition(collCoords[3]);
+
+    playRec->setFillColor(sf::Color::White);
+    scoresRec->setFillColor(sf::Color::White);
+    optionsRec->setFillColor(sf::Color::White);
+    quitRec->setFillColor(sf::Color::White);
+
+    playRec->setSize(colliderSize);
+    scoresRec->setSize(colliderSize);
+    optionsRec->setSize(colliderSize);
+    quitRec->setSize(colliderSize);
 }
 
 void Menu::LoopEvents(Window& window) {
@@ -119,9 +146,32 @@ void Menu::LoopEvents(Window& window) {
             }
         }
 
-        else if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
             if (winclose->getGlobalBounds().contains(mouse_coord)) {
                 //std::cout << "Close the window!" << '\n';
+                window.GetWindow().close();
+            }
+            if (playRec->getGlobalBounds().contains(mouse_coord)) {
+                texts[1].setOutlineThickness(4);
+                texts[pos].setOutlineThickness(0);
+                pos = 1;
+                gameState = 1;
+            }
+            if (scoresRec->getGlobalBounds().contains(mouse_coord)) {
+                texts[2].setOutlineThickness(4);
+                texts[pos].setOutlineThickness(0);
+                pos = 2;
+                gameState = 2;
+            }
+            if (optionsRec->getGlobalBounds().contains(mouse_coord)) {
+                texts[3].setOutlineThickness(4);
+                texts[pos].setOutlineThickness(0);
+                pos = 3;
+            }
+            if (quitRec->getGlobalBounds().contains(mouse_coord)) {
+                texts[4].setOutlineThickness(4);
+                texts[pos].setOutlineThickness(0);
+                pos = 4;
                 window.GetWindow().close();
             }
         }
@@ -134,8 +184,10 @@ void Menu::DrawAll(Window& window, sf::Text fpsText) {
     for (auto t : texts) {
         window.GetWindow().draw(t);
     }
-    window.GetWindow().display();
+
+
     window.DrawScore(fpsText);
+    window.GetWindow().display();
 }
 
 int Menu::GetState()

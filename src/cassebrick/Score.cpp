@@ -68,6 +68,11 @@ std::vector<int> Score::GetTopScores() {
     if (topScores.size() > 5) {
         topScores.resize(5); // Conserve seulement les 5 meilleurs scores
     }
+    if (topScores.size() < 5) {
+        for (topScores.size(); topScores.size() < 5;) {
+            topScores.push_back(0);
+        }
+    }
 
     return topScores;
 }
