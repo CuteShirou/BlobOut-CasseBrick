@@ -29,12 +29,12 @@ void init(Score& score, Window& window, Paddle* paddle, Ball* ball, std::vector<
     ball->setSpeed(ballSpeed);
 
     //setup bricks
-    int rows = 5; // Nombre de lignes de briques
+    int rows = 20; // Nombre de lignes de briques
     int cols = 10; // Nombre de colonnes de briques
     window.SetBackground("../../../src/cassebrick/Wallpaper.png");
   
-    float spacingX = windowWidth * 0.015;
-    float spacingY = windowHeight * 0.007;
+    float spacingX = windowWidth * 0.05 / rows;
+    float spacingY = windowHeight * 0.03 / cols;
 
     //setup sound
     collisionSound.SetVolume(80);
