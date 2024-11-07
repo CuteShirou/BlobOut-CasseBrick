@@ -23,15 +23,15 @@ void Menu::SetValues(Window& window) {
     int windowWidth = window.GetWidth();
     int windowHeight = window.GetHeight();
 
-    font->loadFromFile("../../../src/cassebrick/CyborgPunk.ttf");
-    image->loadFromFile("../../../src/cassebrick/Background_Menu.png");
+    font->loadFromFile("../../../../../src/cassebrick/CyborgPunk.ttf");
+    image->loadFromFile("../../../../../src/cassebrick/Background_Menu.png");
     bg->setTexture(*image);
 
     // Scale background sprite to fit the window
     float bgScaleX = (windowWidth) / 800.0f;
     float bgScaleY = (windowHeight) / 600.0f;
-    std::cout << bgScaleX << " : " << bgScaleY << std::endl;
-    std::cout << windowWidth << " : " << windowHeight << std::endl;
+    /*std::cout << bgScaleX << " : " << bgScaleY << std::endl;
+    std::cout << windowWidth << " : " << windowHeight << std::endl;*/
     bg->setScale(bgScaleX, bgScaleY);
 
 

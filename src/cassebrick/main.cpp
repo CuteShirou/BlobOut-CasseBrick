@@ -31,7 +31,7 @@ void init(Score& score, Window& window, Paddle* paddle, Ball* ball, std::vector<
     //setup bricks
     int rows = 6; // Nombre de lignes de briques
     int cols = 10; // Nombre de colonnes de briques
-    window.SetBackground("../../../src/cassebrick/Wallpaper.png");
+    window.SetBackground("../../../../../src/cassebrick/Wallpaper.png");
   
     float spacingX = windowWidth * 0.05 / rows;
     float spacingY = windowHeight * 0.03 / cols;
@@ -111,8 +111,8 @@ bool gameloop(Window& window, Paddle* paddle, Ball* ball, ParticleSystem& partic
         }
     }
     window.DrawParticle(particles);
-    ball->SpriteDraw("../../../src/cassebrick/ball.png");
-    paddle->SpriteDraw("../../../src/cassebrick/paddle.png");
+    ball->SpriteDraw("../../../../../src/cassebrick/ball.png");
+    paddle->SpriteDraw("../../../../../src/cassebrick/paddle.png");
     window.Draw(ball->GetSprite());
     window.Draw(paddle->GetSprite());
     window.DrawScore(score.GetScoreText());
@@ -139,13 +139,13 @@ int main()
     sf::Clock fpsClock;
     sf::Text fpsText;
     sf::Font font;
-    font.loadFromFile("../../../src/cassebrick/CyborgPunk.ttf");
+    font.loadFromFile("../../../../../src/cassebrick/CyborgPunk.ttf");
     fpsText.setFont(font);
     fpsText.setCharacterSize(12);
     fpsText.setFillColor(sf::Color(255, 255, 255, 100));
     fpsText.setString(sf::String("FPS : 0"));
-    Sound collisionSound("../../../src/cassebrick/Augh.wav");
-    Sound BackgroundMusic("../../../src/cassebrick/BackgroundMusic.wav");
+    Sound collisionSound("../../../../../src/cassebrick/Augh.wav");
+    Sound BackgroundMusic("../../../../../src/cassebrick/BackgroundMusic.wav");
     collisionSound.SetVolume(60);
     BackgroundMusic.SetVolume(100);
     int gameState = 0;
