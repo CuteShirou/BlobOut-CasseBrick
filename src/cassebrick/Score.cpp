@@ -5,7 +5,7 @@
 // Constructeur : initialise le score et charge la police
 Score::Score() : score(0), multiplier(1.f) {
     // Charge la police (assurez-vous que "arial.ttf" est bien dans votre dossier de projet)
-    if (!font.loadFromFile("../../../../../src/cassebrick/CyborgPunk.ttf")) {
+    if (!font.loadFromFile("../../../src/cassebrick/CyborgPunk.ttf")) {
         // Gestion d'erreur si le fichier de police ne peut être chargé
 		std::cout << "Error loading font\n";
     }
