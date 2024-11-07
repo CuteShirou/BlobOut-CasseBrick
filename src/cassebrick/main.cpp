@@ -31,11 +31,6 @@ void init(Score& score, Window& window, Paddle* paddle, Ball* ball, std::vector<
     //setup bricks
     int rows = 20; // Nombre de lignes de briques
     int cols = 10; // Nombre de colonnes de briques
-    float startX = 10; // Position de départ en X
-    float startY = 80; // Position de départ en Y
-    sf::Vector2<float> BrickScale(0.5, 0.5); // Taille de chaque brique
-    float spacingX = 79; // Espace entre les briques en X
-    float spacingY = 35; // Espace entre les briques en Y
     window.SetBackground("../../../src/cassebrick/Wallpaper.png");
   
     float spacingX = windowWidth * 0.05 / rows;
