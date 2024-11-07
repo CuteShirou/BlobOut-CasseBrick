@@ -26,8 +26,8 @@ void init(Score& score, Window& window, Paddle* paddle, Ball* ball, std::vector<
     ball->setSpeed(ballSpeed);
 
     //setup bricks
-    int rows = 5; // Nombre de lignes de briques
-    int cols = 1; // Nombre de colonnes de briques
+    int rows = 4; // Nombre de lignes de briques
+    int cols = 2; // Nombre de colonnes de briques
     float startX = 10; // Position de départ en X
     float startY = 80; // Position de départ en Y
     sf::Vector2<float> BrickScale(0.5, 0.5); // Taille de chaque brique
@@ -137,9 +137,7 @@ int main()
   
     auto fpsTime = std::chrono::system_clock::now();
     float fps;
-
     
-
     BackgroundMusic.PlaySound();
 
     // Boucle principale
@@ -168,12 +166,19 @@ int main()
                 std::cout << "Ended";
                 gameState = 0;
                 menu->SetState(0);
+                score.SaveScore();
+				score.Reset();
             }
         }
         else if (gameState == 2) {
             // Faire 5 rectangles pour les 5 meilleurs scores (display only)
-            std::cout << "Score : ";
-            break;
+            std::vector<int> topScores = score.GetTopScores();
+            std::cout << "Les 5 meilleurs scores :\n";
+            for (int s : topScores) {
+                std::cout << s << std::endl;
+            }
+
+            return 0;
         }
         
     }
