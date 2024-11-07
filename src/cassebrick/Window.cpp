@@ -14,13 +14,15 @@ Window::~Window()
 
 }
 
-void Window::CreateWindow(int width, int height)
+void Window::CreateWindow(int width_, int height_)
 {
-
+	width = width_;
+	height = height_;
 	desktopWidth = sf::VideoMode::getDesktopMode().width;
 	desktopheight = sf::VideoMode::getDesktopMode().height;
-	window.create(sf::VideoMode(width, height), "*test*");
+	window.create(sf::VideoMode(width, height), "Blob Out");
 	window.setVerticalSyncEnabled(true);
+	pos = { (desktopWidth/2) - (width / 2) , (desktopheight / 2) - (width / 2) };
 }
 
 bool Window::SetBackground(const std::string& filepath) {
@@ -74,12 +76,12 @@ void Window::PollEvents(Paddle* sprite) {
 		// Deplacement par la souris uniquement si le controle par la souris est actif
 		if (mouseControl) {
 			sf::Vector2i mouse = sf::Mouse::getPosition(window);
-			sprite->SetPos(sf::Vector2f(window.mapPixelToCoords(mouse).x - sprite->GetSprite().getGlobalBounds().width / 2, 500));
+			sprite->SetPos(sf::Vector2f(window.mapPixelToCoords(mouse).x - sprite->GetSprite().getGlobalBounds().width / 2, height * 0.90));
 			if (sprite->GetPos().x + sprite->GetSprite().getGlobalBounds().width >= window.getSize().x) {
-				sprite->SetPos(sf::Vector2f(window.getSize().x - sprite->GetSprite().getGlobalBounds().width, 500));
+				sprite->SetPos(sf::Vector2f(window.getSize().x - sprite->GetSprite().getGlobalBounds().width, height * 0.90));
 			}
 			if (sprite->GetPos().x <= 0) {
-				sprite->SetPos(sf::Vector2f(0, 500));
+				sprite->SetPos(sf::Vector2f(0, height * 0.90));
 			}
 		}
 	}
@@ -110,9 +112,24 @@ void Window::DrawParticle(ParticleSystem particle)
 	window.draw(particle);
 }
 
+void Window::DrawRect(sf::RectangleShape rect)
+{
+	window.draw(rect);
+}
+
 sf::RenderWindow& Window::GetWindow()
 {
 	return window;
+}
+
+int Window::GetWidth()
+{
+	return width;
+}
+
+int Window::GetHeight()
+{
+	return height;
 }
 
 void Window::GetFPS()
@@ -132,8 +149,8 @@ void Window::ShakeWindow()
 
 void Window::MoveWindow()
 {
-	int x = (rand() % (desktopWidth - (int)window.getSize().x));
-	int y = (rand() % (desktopheight - (int)window.getSize().y));
+	int x = (rand() % (desktopWidth - width));
+	int y = (rand() % (desktopheight - height));
 	window.setPosition({ x, y });
 	pos = window.getPosition();
 }
@@ -143,7 +160,7 @@ void Window::Update(int duration, int intensity)
 {
 	if (isShaking) {
 		// Vérifie si la durée du tremblement est écoulée
-		if (shakeClock.getElapsedTime().asMilliseconds() < duration) { // Utilisez duration ici
+		if (shakeClock.getElapsedTime().asMilliseconds() < duration) {
 			// Calcul des décalages aléatoires
 			int offsetX = (rand() % (intensity * 2)) - intensity; // Valeurs entre -intensity et intensity
 			int offsetY = (rand() % (intensity * 2)) - intensity; // Valeurs entre -intensity et intensity
@@ -157,3 +174,12 @@ void Window::Update(int duration, int intensity)
 		}
 	}
 }
+
+void Window::BackgroundChange() {
+	int index = std::rand() % backgroundPaths.size();
+	if (!SetBackground(backgroundPaths[index])) {
+		std::cerr << "Erreur lors du chargement du fond d'écran aléatoire." << std::endl;
+	}
+}
+
+

@@ -1,8 +1,8 @@
+#include <math.h>
+#include <iostream>
 #include "pch.h"
 #include "Ball.h"
 #include "Window.h"
-#include <math.h>
-#include <iostream>
 
 Ball::Ball(sf::Vector2<float> pos_, sf::Vector2<float> dir_, float speed_) : pos(pos_), dir(dir_), speed(speed_)
 {
@@ -19,7 +19,6 @@ void Ball::Destroy()
 
 void Ball::Move(Window& w)
 {
-    sf::RenderWindow& window = w.GetWindow();
     if (w.start) {
         pos.x += dir.x * speed;
         pos.y += dir.y * speed;
@@ -29,7 +28,7 @@ void Ball::Move(Window& w)
     sprite.setRotation(angle);*/
 
     sf::FloatRect bounds = sprite.getGlobalBounds();
-    if ((pos.x <= 0 && dir.x < 0) || (pos.x + bounds.width >= window.getSize().x && dir.x > 0)) {
+    if ((pos.x <= 0 && dir.x < 0) || (pos.x + bounds.width >= w.GetWidth() && dir.x > 0)) {
         dir.x = -dir.x;
     }
 
@@ -37,12 +36,12 @@ void Ball::Move(Window& w)
         dir.y = -dir.y;
     }
 
-    if (pos.y + bounds.height >= window.getSize().y && dir.y > 0)
+    if (pos.y + bounds.height >= w.GetHeight() && dir.y > 0)
     {
         w.start = false;
         speed = 5.f;
-        pos.x = 400;
-        pos.y = 400;
+        pos.x = (w.GetWidth() / 2) - (bounds.width / 2);
+        pos.y = w.GetHeight() * 0.8;
         dir = { 0, -1 };
     }
     sprite.setPosition(pos.x, pos.y);
@@ -112,9 +111,19 @@ sf::Vector2<float> Ball::GetPos()
     return pos;
 }
 
-void Ball::SetPos(sf::Vector2<float> pos)
+void Ball::SetPos(sf::Vector2<float> pos_)
 {
-    sprite.setPosition(pos);
+    pos = pos_;
+}
+
+void Ball::setDir(sf::Vector2<float> dir_)
+{
+    dir = dir_;
+}
+
+void Ball::setSpeed(float speed_)
+{
+    speed = speed_;
 }
 
 void Ball::SetScale(float x, float y)
