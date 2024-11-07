@@ -54,3 +54,19 @@ void Score::SetMultiplier(float multiplier_)
 int Score::GetScore() const {
     return score;
 }
+
+void Score::SaveScore() {
+    allScores.push_back(score);  // Ajoute le score actuel dans le vecteur
+}
+
+std::vector<int> Score::GetTopScores() {
+    std::vector<int> topScores = allScores;  // Copie des scores en mémoire pour le tri
+
+    std::sort(topScores.begin(), topScores.end()); // Trie les scores en ordre croissant
+
+    if (topScores.size() > 5) {
+        topScores.resize(5); // Conserve seulement les 5 meilleurs scores
+    }
+
+    return topScores;
+}
