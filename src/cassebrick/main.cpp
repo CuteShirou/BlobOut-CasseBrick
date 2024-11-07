@@ -10,7 +10,7 @@
 #include "Menu.h"
 #include "Sound.h"
 
-void init(Score& score, Window& window, Paddle* paddle, Ball* ball, std::vector<Brick>& bricks) {
+void init(Score& score, Window& window, Paddle* paddle, Ball* ball, std::vector<Brick>& bricks, Sound& collisionSound) {
   
     int windowWidth = window.GetWidth();
     int windowHeight = window.GetHeight();
@@ -36,6 +36,9 @@ void init(Score& score, Window& window, Paddle* paddle, Ball* ball, std::vector<
     float spacingX = windowWidth * 0.015;
     float spacingY = windowHeight * 0.007;
 
+    //setup sound
+    collisionSound.SetVolume(80);
+
     // Base dimensions for the brick image
     float baseBrickWidth = 128.0f;
     float baseBrickHeight = 64.0f;
@@ -60,7 +63,7 @@ void init(Score& score, Window& window, Paddle* paddle, Ball* ball, std::vector<
     }
 }
 
-bool gameloop(Window& window, Paddle* paddle, Ball* ball, ParticleSystem& particles, sf::Clock& clock, std::vector<Brick>& bricks, Score& score, sf::Text fpsText, Sound collisionSound){
+bool gameloop(Window& window, Paddle* paddle, Ball* ball, ParticleSystem& particles, sf::Clock& clock, std::vector<Brick>& bricks, Score& score, sf::Text fpsText, Sound& collisionSound){
 
     window.Clear();
     window.PollEvents(paddle);
@@ -168,7 +171,7 @@ int main()
             menu->RunMenu(window, fpsText);
             gameState = menu->GetState();
             if (gameState == 1) {
-                init(score, window, paddle, ball, bricks);
+                init(score, window, paddle, ball, bricks, collisionSound);
             }
         }
 
