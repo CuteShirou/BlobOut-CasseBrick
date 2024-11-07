@@ -22,6 +22,7 @@ Score::Score() : score(0), multiplier(1.f) {
 void Score::Reset() {
     score = 0;
     scoreText.setString("Score: " + std::to_string(score));
+    SetMultiplier(1.f);
 }
 
 // Augmente le score d'un certain nombre de points
