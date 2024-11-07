@@ -29,7 +29,7 @@ void init(Score& score, Window& window, Paddle* paddle, Ball* ball, std::vector<
     ball->setSpeed(ballSpeed);
 
     //setup bricks
-    int rows = 20; // Nombre de lignes de briques
+    int rows = 6; // Nombre de lignes de briques
     int cols = 10; // Nombre de colonnes de briques
     window.SetBackground("../../../src/cassebrick/Wallpaper.png");
   
@@ -38,6 +38,9 @@ void init(Score& score, Window& window, Paddle* paddle, Ball* ball, std::vector<
 
     //setup sound
     collisionSound.SetVolume(80);
+
+    // Reset score at each start
+    score.Reset();
 
     // Base dimensions for the brick image
     float baseBrickWidth = 128.0f;
@@ -177,11 +180,9 @@ int main()
         else if (gameState == 1) {
             if (!gameloop(window, paddle, ball, particles, clock, bricks, score, fpsText, collisionSound)) {
 
-                std::cout << "Ended";
                 gameState = 0;
                 menu->SetState(0);
                 score.SaveScore();
-				score.Reset();
             }
         }
         else if (gameState == 2) {
@@ -191,8 +192,8 @@ int main()
             for (int s : topScores) {
                 std::cout << s << std::endl;
             }
-
-            return 0;
+			gameState = 0;
+			menu->SetState(0);
         }
         else if (gameState == 3) {
 
