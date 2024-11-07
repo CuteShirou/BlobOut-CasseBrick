@@ -67,7 +67,7 @@ void Menu::SetValues(Window& window) {
 
     // Highlight "Play" by default
     texts[1].setOutlineThickness(4);
-    pos = 1;
+    pos = 0;
 
     // Scale and position the close button
     winclose->setSize(sf::Vector2f(windowWidth * 0.0475f, windowHeight * 0.0633f));
@@ -146,9 +146,32 @@ void Menu::LoopEvents(Window& window) {
             }
         }
 
-        else if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
             if (winclose->getGlobalBounds().contains(mouse_coord)) {
                 //std::cout << "Close the window!" << '\n';
+                window.GetWindow().close();
+            }
+            if (playRec->getGlobalBounds().contains(mouse_coord)) {
+                texts[1].setOutlineThickness(4);
+                texts[pos].setOutlineThickness(0);
+                pos = 1;
+                gameState = 1;
+            }
+            if (scoresRec->getGlobalBounds().contains(mouse_coord)) {
+                texts[2].setOutlineThickness(4);
+                texts[pos].setOutlineThickness(0);
+                pos = 2;
+                gameState = 2;
+            }
+            if (optionsRec->getGlobalBounds().contains(mouse_coord)) {
+                texts[3].setOutlineThickness(4);
+                texts[pos].setOutlineThickness(0);
+                pos = 3;
+            }
+            if (quitRec->getGlobalBounds().contains(mouse_coord)) {
+                texts[4].setOutlineThickness(4);
+                texts[pos].setOutlineThickness(0);
+                pos = 4;
                 window.GetWindow().close();
             }
         }
@@ -162,13 +185,9 @@ void Menu::DrawAll(Window& window, sf::Text fpsText) {
         window.GetWindow().draw(t);
     }
 
-    window.DrawRect(*playRec);
-    window.DrawRect(*scoresRec);
-    window.DrawRect(*optionsRec);
-    window.DrawRect(*quitRec);
 
-    window.GetWindow().display();
     window.DrawScore(fpsText);
+    window.GetWindow().display();
 }
 
 int Menu::GetState()
